@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ALPHABET GENERATOR</title>
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg2pdf.js@1.3.6/dist/svg2pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.0.16/svg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.draggable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.resize.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.select.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/gif.js"></script>
+</head>
+
+<body>
+    <main>
+<section id="openerSection">
+    <div id="helloWorldContainer" class="hello-world-container"></div>
+    <div class="font-controls">
+        <label for="colorPickerFont"></label>
+        <input type="color" id="colorPickerFont" name="colorPickerFont" value="#000000">
+        <button id="generateAlphabetButton" class="icon-button"><i class="fas fa-random"></i> </button>
+    </div>
+</section>
+
+
+<!-- Font Section -->
+<section id="fontSection">
+    <div class="left-column">
+        <div id="alphabetContainer" class="alphabet-container"></div>
+    </div>
+    <div class="right-column">
+        <div class="slider-container">
+            <label for="baselineSlider">Baseline:</label>
+            <input type="range" id="baselineSlider" min="0" max="500" step="1" value="200">
+
+            <label for="xHeightSlider">X-Height:</label>
+            <input type="range" id="xHeightSlider" min="0" max="500" step="1" value="150">
+
+            <label for="capHeightSlider">Cap Height:</label>
+            <input type="range" id="capHeightSlider" min="0" max="500" step="1" value="250">
+
+            <label for="ascenderSlider">Ascender:</label>
+            <input type="range" id="ascenderSlider" min="0" max="500" step="1" value="300">
+
+            <label for="descenderSlider">Descender:</label>
+            <input type="range" id="descenderSlider" min="0" max="500" step="1" value="100">
+        </div>
+    </div>
+</section>
+
+<!-- Type Tester Section -->
+<section id="typeTesterSection">
+
+        <div id="textCanvasContainer" class="canvas-container" tabindex="0"></div>
+</section>
+
+        <!-- Letter Section -->
+        <section id="letterSection">
+            <div class="left-column">
+                <label for="letterSelect">Wähle einen Buchstaben:</label>
+                <select id="letterSelect"></select> <!-- Dropdown zur Auswahl von Buchstaben -->
+                <div id="largeLetterPreview"></div> <!-- Hier wird die große Variante angezeigt -->
+                <button id="generateLetterButton" class="icon-button"><i class="fas fa-random"></i> </button>
+            </div>
+            <div class="right-column">
+                <div id="letterVariationsContainer" class="letter-variations-container"></div>
+            </div>
+        </section>
+
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="alphabet.js" type="module"></script>
+    <script src="letters.js" type="module"></script>
+
+
+    <script type="module">
+
+        import { generateAlphabet, generateLetterVariations } from './alphabet.js';
+        import { drawLetter } from './letters.js';
+
+        let alphabetSVGs = {};
+
+    document.addEventListener('DOMContentLoaded', () => {
+        alphabetSVGs = generateAlphabet();
+        displayGeneratedAlphabet(alphabetSVGs);
+        populateLetterSelect(alphabetSVGs);
+        generateAndDisplayLetterVariations();
+        insertPlaceholderText("TYPE SOMETHING");
+        displayHelloWorld(alphabetSVGs); // Initial display of "Hello World" on page load
+
+        document.getElementById('generateAlphabetButton').addEventListener('click', () => {
+            alphabetSVGs = generateAlphabet();
+            displayGeneratedAlphabet(alphabetSVGs);
+            populateLetterSelect(alphabetSVGs);
+            displayHelloWorld(alphabetSVGs); // Update "Hello World" when alphabet is generated
+            console.log('Generated Alphabet:', alphabetSVGs);
+        });
+    
+        document.getElementById('textCanvasContainer').addEventListener('keydown', handleKeyPress);
+        document.getElementById('generateLetterButton').addEventListener('click', generateAndDisplayLetterVariations);
+        document.getElementById('letterSelect').addEventListener('change', generateAndDisplayLetterVariations);
+    });
+
+    function displayHelloWorld(alphabet) {
+        const helloWorldContainer = document.getElementById('helloWorldContainer');
+        helloWorldContainer.innerHTML = ''; // Clear previous content
+
+        const text = "HELLO WORLD";
+        for (const char of text) {
+            if (char === ' ') {
+                // Add an empty space between "Hello" and "World"
+                const spaceElement = document.createElement('div');
+                spaceElement.style.width = '100px'; // Adjust width to set the space size
+                spaceElement.style.display = 'inline-block';
+                helloWorldContainer.appendChild(spaceElement);
+            } else if (alphabet[char]) {
+                const letterSVG = alphabet[char].cloneNode(true);
+                letterSVG.classList.add('letter-svg');
+                helloWorldContainer.appendChild(letterSVG);
+            }
+        }
+    }
+
+
+
+        function insertPlaceholderText(text) {
+            const textCanvasContainer = document.getElementById('textCanvasContainer');
+            textCanvasContainer.innerHTML = '';
+            for (const char of text.toUpperCase()) {
+                if (alphabetSVGs[char]) {
+                    const letterSVG = alphabetSVGs[char].cloneNode(true);
+                    letterSVG.classList.add('letter-svg');
+                    textCanvasContainer.appendChild(letterSVG);
+                }
+            }
+        }
+
+        function handleKeyPress(event) {
+            const textCanvasContainer = document.getElementById('textCanvasContainer');
+            if (textCanvasContainer.innerHTML.includes("TYPE SOMETHING")) {
+                textCanvasContainer.innerHTML = '';
+            }
+
+            const letter = event.key.toUpperCase();
+
+            if (alphabetSVGs[letter]) {
+                const letterSVG = alphabetSVGs[letter].cloneNode(true);
+                letterSVG.classList.add('letter-svg');
+                textCanvasContainer.appendChild(letterSVG);
+            } else if (event.key === 'Backspace') {
+                textCanvasContainer.innerHTML = '';
+            }
+        }
+
+
+
+        function displayGeneratedAlphabet(alphabet) {
+            const alphabetContainer = document.getElementById('alphabetContainer');
+            alphabetContainer.innerHTML = '';
+            for (const letter in alphabet) {
+                const svg = alphabet[letter];
+                svg.dataset.letter = letter;
+                alphabetContainer.appendChild(svg);
+            }
+        }
+
+        function generateAndDisplayLetterVariations() {
+            const letterSelect = document.getElementById('letterSelect');
+            const letter = letterSelect.value;
+            const variations = generateLetterVariations(letter);
+            const letterVariationsContainer = document.getElementById('letterVariationsContainer');
+            letterVariationsContainer.innerHTML = '';
+            variations.forEach((variation, index) => {
+                letterVariationsContainer.appendChild(variation);
+                variation.addEventListener('click', () => {
+                    displayLargeLetterPreview(variation);
+                });
+                if (index === 0) {
+                    displayLargeLetterPreview(variation);
+                }
+            });
+        }
+
+        function displayLargeLetterPreview(svgElement) {
+            const largePreviewContainer = document.getElementById('largeLetterPreview');
+            largePreviewContainer.innerHTML = '';
+            const largeSVG = svgElement.cloneNode(true);
+            largePreviewContainer.appendChild(largeSVG);
+        }
+
+        function populateLetterSelect(alphabet) {
+            const letterSelect = document.getElementById('letterSelect');
+            letterSelect.innerHTML = '';
+
+            for (const letter in alphabet) {
+                const option = document.createElement('option');
+                option.value = letter;
+                option.innerHTML = letter;
+                letterSelect.appendChild(option);
+            }
+        }
+
+    </script>
+</body>
+
+</html>
