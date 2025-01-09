@@ -4,9 +4,17 @@ import { drawCircle, drawArc } from './arcs_and_circles.js';
 import { drawStamm } from './stamm.js';
 import { drawSerif } from './serif.js';
 
+const FIXED_WIDTH = 500; // Set a fixed width for all letters
+
 export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeight, descenderHeight, xHeight, style, color) {
     const c = {
-        svg, width, baseline, capHeight, ascenderHeight, descenderHeight, xHeight,
+        svg,
+        width: FIXED_WIDTH, // Use the fixed width
+        baseline,
+        capHeight,
+        ascenderHeight,
+        descenderHeight,
+        xHeight,
         topWidth: stammParameters.topWidth,
         bottomWidth: stammParameters.bottomWidth,
         shapeType: stammParameters.shapeType,
@@ -19,6 +27,25 @@ export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeig
         drawArc: (cx, cy, radius, startAngle, endAngle) => drawArc(c, cx, cy, radius, startAngle, endAngle)
     };
 
+    // Clear previous letter contents
+    while (svg.firstChild) {
+        svg.removeChild(svg.firstChild);
+    }
+
+    // Calculate the dynamic height based on the letter's vertical extents
+    const dynamicHeight = Math.max(ascenderHeight + descenderHeight, xHeight);
+
+    // Set SVG dimensions with fixed width and dynamic height
+    svg.setAttribute('width', FIXED_WIDTH);
+    svg.setAttribute('height', dynamicHeight);
+    svg.setAttribute('viewBox', `0 -${descenderHeight} ${FIXED_WIDTH} ${dynamicHeight}`);
+
+    // Center the content horizontally
+    const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    group.setAttribute("transform", `translate(0, ${dynamicHeight / 2})`);
+    svg.appendChild(group);
+    c.svg = group; // Update reference to use the group for drawing
+
     if (drawFunctions[letter]) {
         drawFunctions[letter](c);
         if (style && style !== 'keinstyle') {
@@ -29,6 +56,7 @@ export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeig
         console.error(`Unknown letter: ${letter}`);
     }
 }
+
 
 function applyColorToElements(svg, color) {
     const elements = svg.querySelectorAll('path, circle, rect, line, polygon');

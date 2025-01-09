@@ -14,150 +14,143 @@
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.resize.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.select.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/gif.js"></script>
+
 </head>
 
 <body>
-    <main>
-<section id="openerSection">
-    <div id="helloWorldContainer" class="hello-world-container"></div>
+<div id="main-settings" class="banner">
+    <div id="color-settings">
+        <label for="primary-color"></label>
+        <input class="colorPicker" type="color" id="primary-color" value="#ffffff">
+        <label for="secondary-color"></label>
+        <input class="colorPicker" type="color" id="secondary-color" value="#000000">
+        <button id="swap-colors">swap</button>
+            <butto>About</button>
+    </div>
+
+</div>
+<div id="header" class="banner">
+    <div class="marquee" class="banner">
+        <span>Generative Fonts - Create Your Unique Typeface!</span>
+    </div>
+</div>
+
+
+
+
+
+    <!-- Font Section -->
+    <section id="fontSection">
+        <div id="alphabetContainer"></div>
+    </section>
+
+
     <div class="font-controls">
-        <label for="colorPickerFont"></label>
-        <input type="color" id="colorPickerFont" name="colorPickerFont" value="#000000">
-        <button id="generateAlphabetButton" class="icon-button"><i class="fas fa-random"></i> </button>
+
+        <button id="generateAlphabetButton" class="icon-button"><i class="fas fa-random"></i></button>
     </div>
-</section>
 
-
-<!-- Font Section -->
-<section id="fontSection">
-    <div class="left-column">
-        <div id="alphabetContainer" class="alphabet-container"></div>
-    </div>
-    <div class="right-column">
-        <div class="slider-container">
-            <label for="baselineSlider">Baseline:</label>
-            <input type="range" id="baselineSlider" min="0" max="500" step="1" value="200">
-
-            <label for="xHeightSlider">X-Height:</label>
-            <input type="range" id="xHeightSlider" min="0" max="500" step="1" value="150">
-
-            <label for="capHeightSlider">Cap Height:</label>
-            <input type="range" id="capHeightSlider" min="0" max="500" step="1" value="250">
-
-            <label for="ascenderSlider">Ascender:</label>
-            <input type="range" id="ascenderSlider" min="0" max="500" step="1" value="300">
-
-            <label for="descenderSlider">Descender:</label>
-            <input type="range" id="descenderSlider" min="0" max="500" step="1" value="100">
-        </div>
-    </div>
-</section>
-
-<!-- Type Tester Section -->
+    <!-- Type Tester Section -->
 <section id="typeTesterSection">
-
-        <div id="textCanvasContainer" class="canvas-container" tabindex="0"></div>
+<div id="typetester-header" class="banner">
+    <div class="marquee" class="banner">
+        <span>Gallery- Typetester</span>
+    </div>
+</div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
+    <div class="typetester-container" tabindex="0"></div>
 </section>
 
-        <!-- Letter Section -->
-        <section id="letterSection">
-            <div class="left-column">
-                <label for="letterSelect">Wähle einen Buchstaben:</label>
-                <select id="letterSelect"></select> <!-- Dropdown zur Auswahl von Buchstaben -->
-                <div id="largeLetterPreview"></div> <!-- Hier wird die große Variante angezeigt -->
-                <button id="generateLetterButton" class="icon-button"><i class="fas fa-random"></i> </button>
+    <!-- Letter Section -->
+    <section id="letterSection">
+        <div class="left-column">
+            <div id="carousel" class="carousel">
+                <button id="prevLetterButton" class="icon-button"><i class="fas fa-chevron-left"></i></button>
+                <div id="carouselInner" class="carousel-inner">
+                    <div id="sidePreviewLeft" class="carousel-item side"></div>
+                    <div id="largeLetterPreview" class="carousel-item active"></div>
+                    <div id="sidePreviewRight" class="carousel-item side"></div>
+                </div>
+                <button id="nextLetterButton" class="icon-button"><i class="fas fa-chevron-right"></i></button>
             </div>
-            <div class="right-column">
-                <div id="letterVariationsContainer" class="letter-variations-container"></div>
-            </div>
-        </section>
+            <button id="generateLetterButton" class="icon-button"><i class="fas fa-random"></i></button>
+        </div>
+        <div class="right-column">
+            <div id="letterVariationsContainer" class="letter-variations-container"></div>
+        </div>
+    </section>
 
-    </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="alphabet.js" type="module"></script>
     <script src="letters.js" type="module"></script>
-
+    <script src="color-settings.js"></script>
 
     <script type="module">
-
         import { generateAlphabet, generateLetterVariations } from './alphabet.js';
         import { drawLetter } from './letters.js';
 
         let alphabetSVGs = {};
+        let currentLetterIndex = 0;
+        const alphabetKeys = [];
 
-    document.addEventListener('DOMContentLoaded', () => {
-        alphabetSVGs = generateAlphabet();
-        displayGeneratedAlphabet(alphabetSVGs);
-        populateLetterSelect(alphabetSVGs);
-        generateAndDisplayLetterVariations();
-        insertPlaceholderText("TYPE SOMETHING");
-        displayHelloWorld(alphabetSVGs); // Initial display of "Hello World" on page load
-
-        document.getElementById('generateAlphabetButton').addEventListener('click', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             alphabetSVGs = generateAlphabet();
+            alphabetKeys.push(...Object.keys(alphabetSVGs));
             displayGeneratedAlphabet(alphabetSVGs);
-            populateLetterSelect(alphabetSVGs);
-            displayHelloWorld(alphabetSVGs); // Update "Hello World" when alphabet is generated
-            console.log('Generated Alphabet:', alphabetSVGs);
+            updateCarousel();
+            generateAndDisplayLetterVariations();
+
+            document.getElementById('generateAlphabetButton').addEventListener('click', () => {
+                alphabetSVGs = generateAlphabet();
+                alphabetKeys.splice(0, alphabetKeys.length, ...Object.keys(alphabetSVGs));
+                displayGeneratedAlphabet(alphabetSVGs);
+                updateCarousel();
+            });
+
+            document.getElementById('prevLetterButton').addEventListener('click', () => navigateLetter(-1));
+            document.getElementById('nextLetterButton').addEventListener('click', () => navigateLetter(1));
+
+            document.getElementById('generateLetterButton').addEventListener('click', generateAndDisplayLetterVariations);
+
+            const textCanvasContainer = document.getElementById('textCanvasContainer');
+            textCanvasContainer.addEventListener('keydown', handleKeyPress);
+            textCanvasContainer.addEventListener('click', () => textCanvasContainer.focus());
         });
-    
-        document.getElementById('textCanvasContainer').addEventListener('keydown', handleKeyPress);
-        document.getElementById('generateLetterButton').addEventListener('click', generateAndDisplayLetterVariations);
-        document.getElementById('letterSelect').addEventListener('change', generateAndDisplayLetterVariations);
-    });
+document.getElementById('textCanvasContainer').addEventListener('click', () => {
+    document.getElementById('textCanvasContainer').focus();
+});
 
-    function displayHelloWorld(alphabet) {
-        const helloWorldContainer = document.getElementById('helloWorldContainer');
-        helloWorldContainer.innerHTML = ''; // Clear previous content
 
-        const text = "HELLO WORLD";
-        for (const char of text) {
-            if (char === ' ') {
-                // Add an empty space between "Hello" and "World"
-                const spaceElement = document.createElement('div');
-                spaceElement.style.width = '100px'; // Adjust width to set the space size
-                spaceElement.style.display = 'inline-block';
-                helloWorldContainer.appendChild(spaceElement);
-            } else if (alphabet[char]) {
-                const letterSVG = alphabet[char].cloneNode(true);
-                letterSVG.classList.add('letter-svg');
-                helloWorldContainer.appendChild(letterSVG);
-            }
+    function handleKeyPress(event) {
+        console.log("Key pressed:", event.key);
+        const textCanvasContainer = document.getElementById('textCanvasContainer');
+        if (textCanvasContainer.innerHTML.includes("TYPE SOMETHING")) {
+            textCanvasContainer.innerHTML = '';
+        }
+
+        const letter = event.key.toUpperCase();
+        if (alphabetSVGs[letter]) {
+            const letterSVG = alphabetSVGs[letter].cloneNode(true);
+            letterSVG.classList.add('letter-svg');
+            textCanvasContainer.appendChild(letterSVG);
+        } else if (event.key === 'Backspace') {
+            textCanvasContainer.lastChild?.remove();
         }
     }
-
-
-
-        function insertPlaceholderText(text) {
-            const textCanvasContainer = document.getElementById('textCanvasContainer');
-            textCanvasContainer.innerHTML = '';
-            for (const char of text.toUpperCase()) {
-                if (alphabetSVGs[char]) {
-                    const letterSVG = alphabetSVGs[char].cloneNode(true);
-                    letterSVG.classList.add('letter-svg');
-                    textCanvasContainer.appendChild(letterSVG);
-                }
-            }
-        }
-
-        function handleKeyPress(event) {
-            const textCanvasContainer = document.getElementById('textCanvasContainer');
-            if (textCanvasContainer.innerHTML.includes("TYPE SOMETHING")) {
-                textCanvasContainer.innerHTML = '';
-            }
-
-            const letter = event.key.toUpperCase();
-
-            if (alphabetSVGs[letter]) {
-                const letterSVG = alphabetSVGs[letter].cloneNode(true);
-                letterSVG.classList.add('letter-svg');
-                textCanvasContainer.appendChild(letterSVG);
-            } else if (event.key === 'Backspace') {
-                textCanvasContainer.innerHTML = '';
-            }
-        }
 
 
 
@@ -171,9 +164,40 @@
             }
         }
 
+        function navigateLetter(direction) {
+            currentLetterIndex = (currentLetterIndex + direction + alphabetKeys.length) % alphabetKeys.length;
+            updateCarousel();
+            generateAndDisplayLetterVariations();
+        }
+
+        function updateCarousel() {
+            const letter = alphabetKeys[currentLetterIndex];
+            const prevLetter = alphabetKeys[(currentLetterIndex - 1 + alphabetKeys.length) % alphabetKeys.length];
+            const nextLetter = alphabetKeys[(currentLetterIndex + 1) % alphabetKeys.length];
+
+            const largePreviewContainer = document.getElementById('largeLetterPreview');
+            const sidePreviewLeft = document.getElementById('sidePreviewLeft');
+            const sidePreviewRight = document.getElementById('sidePreviewRight');
+
+            largePreviewContainer.innerHTML = '';
+            sidePreviewLeft.innerHTML = '';
+            sidePreviewRight.innerHTML = '';
+
+            const largeSVG = alphabetSVGs[letter].cloneNode(true);
+            const leftSVG = alphabetSVGs[prevLetter].cloneNode(true);
+            const rightSVG = alphabetSVGs[nextLetter].cloneNode(true);
+
+            largeSVG.classList.add('large-letter-svg');
+            leftSVG.classList.add('side-letter-svg');
+            rightSVG.classList.add('side-letter-svg');
+
+            largePreviewContainer.appendChild(largeSVG);
+            sidePreviewLeft.appendChild(leftSVG);
+            sidePreviewRight.appendChild(rightSVG);
+        }
+
         function generateAndDisplayLetterVariations() {
-            const letterSelect = document.getElementById('letterSelect');
-            const letter = letterSelect.value;
+            const letter = alphabetKeys[currentLetterIndex];
             const variations = generateLetterVariations(letter);
             const letterVariationsContainer = document.getElementById('letterVariationsContainer');
             letterVariationsContainer.innerHTML = '';
@@ -195,19 +219,38 @@
             largePreviewContainer.appendChild(largeSVG);
         }
 
-        function populateLetterSelect(alphabet) {
-            const letterSelect = document.getElementById('letterSelect');
-            letterSelect.innerHTML = '';
+        function makeSVGEditable(svgElement) {
+    const draw = SVG(svgElement);
 
-            for (const letter in alphabet) {
-                const option = document.createElement('option');
-                option.value = letter;
-                option.innerHTML = letter;
-                letterSelect.appendChild(option);
-            }
-        }
+    // Macht jedes Element im SVG draggable
+    draw.find('path, line, rect, circle').forEach((el) => {
+        el.draggable();
+    });
+
+    // Macht die SVG-Elemente resizable
+    draw.find('rect, circle, ellipse').forEach((el) => {
+        el.resize();
+    });
+
+    // Auswahl aktivieren
+    draw.select().on('select', (event) => {
+        console.log('Selected:', event.target);
+    });
+}
+
+// Füge diese Funktion nach der SVG-Generierung hinzu
+function enableEditingInAlphabetContainer() {
+    const alphabetContainer = document.getElementById('alphabetContainer');
+    const svgs = alphabetContainer.querySelectorAll('svg');
+
+    svgs.forEach((svg) => {
+        makeSVGEditable(svg);
+    });
+}
+
 
     </script>
+
 </body>
 
 </html>

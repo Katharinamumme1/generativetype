@@ -1,4 +1,4 @@
-import { useLineVersion, lineStyle, elementWidths, numPolygonPoints } from './alphabet.js';
+import { useLineVersion, lineStyle, elementWidths, numPolygonPoints,topWidth } from './alphabet.js';
 import { drawDotted } from './lines.js';
 
 export function drawCircle(c, cx, cy, radius) {
@@ -11,8 +11,13 @@ export function drawCircle(c, cx, cy, radius) {
             drawPolygonalArcShape(c, cx, cy, radius, Math.PI, 2 * Math.PI, numPolygonPoints);
         }
     } else {
-        drawShapeArc(c, cx, cy, radius, 0, Math.PI, elementWidths.arcStartWidth, elementWidths.arcEndWidth);
-        drawShapeArc(c, cx, cy, radius, Math.PI, 2 * Math.PI, elementWidths.arcStartWidth, elementWidths.arcEndWidth);
+        if (Math.random() < 0.75) {
+            drawRandomArc(c, cx, cy, radius, elementWidths.arcStartWidth, 0, Math.PI);
+            drawRandomArc(c, cx, cy, radius, elementWidths.arcStartWidth, Math.PI, 2 * Math.PI);
+        } else {
+            drawShapeArc(c, cx, cy, radius, 0, Math.PI, elementWidths.arcStartWidth, elementWidths.arcEndWidth);
+            drawShapeArc(c, cx, cy, radius, Math.PI, 2 * Math.PI, elementWidths.arcStartWidth, elementWidths.arcEndWidth);
+        }
     }
 }
 
@@ -24,7 +29,11 @@ export function drawArc(c, cx, cy, radius, startAngle, endAngle) {
             drawPolygonalArcShape(c, cx, cy, radius, startAngle, endAngle, numPolygonPoints);
         }
     } else {
-        drawShapeArc(c, cx, cy, radius, startAngle, endAngle, elementWidths.arcStartWidth, elementWidths.arcEndWidth);
+        if (Math.random() < 0.75) {
+            drawRandomArc(c, cx, cy, radius, elementWidths.arcStartWidth, startAngle, endAngle);
+        } else {
+            drawShapeArc(c, cx, cy, radius, startAngle, endAngle, elementWidths.arcStartWidth, elementWidths.arcEndWidth);
+        }
     }
 }
 
@@ -62,7 +71,7 @@ function drawShapeArc(c, cx, cy, radius, startAngle, endAngle, startWidth, endWi
 
     let pathData = `M ${startInnerX} ${startInnerY}`;
 
-    const points = 5 + Math.floor(Math.random() * 6); // 5 bis 10 Punkte
+    const points = 5 + Math.floor(Math.random() * 6);
     for (let i = 1; i < points; i++) {
         const t = i / (points - 1);
         const angle = startAngle + t * (endAngle - startAngle);
@@ -93,13 +102,10 @@ function drawShapeArc(c, cx, cy, radius, startAngle, endAngle, startWidth, endWi
         }
     }
 
-    // Keine `Z` für das Schließen des Pfades
-    // pathData += ` Z`; // Entfernt, damit der Pfad offen bleibt
-
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", pathData);
-    path.setAttribute("fill", "none"); // Kein Füllung für Shape-Arcs
-    path.setAttribute("stroke", "black"); // Setze die Umrandungsfarbe
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "black");
     path.setAttribute("stroke-width", "1");
     c.svg.appendChild(path);
 }
@@ -124,22 +130,108 @@ function drawPolygonalArcShape(c, cx, cy, radius, startAngle, endAngle, numPolyg
         }
     }
 
-    // Keine `Z` für das Schließen des Pfades
-    // pathD1 += ` Z`; // Entfernt, damit der Pfad offen bleibt
-
     const shapePath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     shapePath.setAttribute("d", pathD1);
-    shapePath.setAttribute("fill", "none"); // Kein Füllung für Polygonal-Arcs
-    shapePath.setAttribute("stroke", "black"); // Setze die Umrandungsfarbe
+    shapePath.setAttribute("fill", "none");
+    shapePath.setAttribute("stroke", "black");
     shapePath.setAttribute("stroke-width", "1");
     c.svg.appendChild(shapePath);
 }
 
-function drawC(c) {
-    const midX = c.width / 2;
-    const radius = c.capHeight / 2;
-    const centerY = c.baseline - radius;
+function drawRandomArc(c, cx, cy, radius, topWidth, startAngle = Math.PI / 2, endAngle = startAngle + Math.PI, smooth = false) {
+    const createBezierCurve = (startX, startY, endX, endY, direction) => {
+        const controlDistance = 100;
+        const dx = endX - startX;
+        const dy = endY - startY;
 
-    // Draw the arc from the baseline to the cap height
-    c.drawArc(midX, centerY, radius, Math.PI / 2, 3 * Math.PI / 2);
+        const controlX1 = startX + dx * 0.3 + (Math.random() - 0.5) * controlDistance * direction;
+        const controlY1 = startY + dy * 0.3 + (Math.random() - 0.5) * controlDistance * direction;
+        const controlX2 = endX - dx * 0.3 + (Math.random() - 0.5) * controlDistance * direction;
+        const controlY2 = endY - dy * 0.3 + (Math.random() - 0.5) * controlDistance * direction;
+
+        return `C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${endX} ${endY}`;
+    };
+
+    const createSmoothCurve = (startX, startY, endX, endY) => {
+        const midX = (startX + endX) / 2;
+        const midY = (startY + endY) / 2;
+        return `Q ${midX} ${midY}, ${endX} ${endY}`;
+    };
+
+    const createCorner = (startX, startY, endX, endY) => `L ${endX} ${endY}`;
+
+    // Start and end points for the outer edge, adjusted for topWidth
+    const startXOuter = cx + (radius + topWidth / 2) * Math.cos(startAngle);
+    const startYOuter = cy + (radius + topWidth / 2) * Math.sin(startAngle);
+    const endXOuter = cx + (radius + topWidth / 2) * Math.cos(endAngle);
+    const endYOuter = cy + (radius + topWidth / 2) * Math.sin(endAngle);
+
+    // Start and end points for the inner edge
+    const startXInner = cx + (radius - topWidth / 2) * Math.cos(startAngle);
+    const startYInner = cy + (radius - topWidth / 2) * Math.sin(startAngle);
+    const endXInner = cx + (radius - topWidth / 2) * Math.cos(endAngle);
+    const endYInner = cy + (radius - topWidth / 2) * Math.sin(endAngle);
+
+    let pathD = `M ${startXOuter} ${startYOuter}`;
+
+    // Outer curves and corners
+    const outerSegments = Math.floor(Math.random() * 6);
+    let currentX = startXOuter;
+    let currentY = startYOuter;
+    let stepAngle = (endAngle - startAngle) / (outerSegments + 1);
+
+    for (let i = 0; i < outerSegments; i++) {
+        const angle = startAngle + stepAngle * (i + 1);
+        const newX = cx + (radius + topWidth / 2) * Math.cos(angle);
+        const newY = cy + (radius + topWidth / 2) * Math.sin(angle);
+
+        if (smooth) {
+            pathD += createSmoothCurve(currentX, currentY, newX, newY);
+        } else if (Math.random() < 0.5) {
+            pathD += createBezierCurve(currentX, currentY, newX, newY, 1);
+        } else {
+            pathD += createCorner(currentX, currentY, newX, newY);
+        }
+
+        currentX = newX;
+        currentY = newY;
+    }
+
+    pathD += ` L ${endXOuter} ${endYOuter}`;
+    pathD += ` L ${endXInner} ${endYInner}`;
+
+    // Inner curves and corners
+    let innerSegments = Math.floor(Math.random() * 6);
+    if (innerSegments === 0) innerSegments = 1; // Ensure at least one segment
+
+    currentX = endXInner;
+    currentY = endYInner;
+    stepAngle = (endAngle - startAngle) / (innerSegments + 1);
+
+    for (let i = 0; i < innerSegments; i++) {
+        const angle = endAngle - stepAngle * (i + 1);
+        const newX = cx + (radius - topWidth / 2) * Math.cos(angle);
+        const newY = cy + (radius - topWidth / 2) * Math.sin(angle);
+
+        if (smooth) {
+            pathD += createSmoothCurve(currentX, currentY, newX, newY);
+        } else if (Math.random() < 0.5) {
+            pathD += createBezierCurve(currentX, currentY, newX, newY, -1);
+        } else {
+            pathD += createCorner(currentX, currentY, newX, newY);
+        }
+
+        currentX = newX;
+        currentY = newY;
+    }
+
+    pathD += ` L ${startXInner} ${startYInner}`;
+    pathD += ` Z`;
+
+    const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathElement.setAttribute("d", pathD);
+    pathElement.setAttribute("fill", "black");
+    c.svg.appendChild(pathElement);
+
+    return { outerSegments, innerSegments };
 }

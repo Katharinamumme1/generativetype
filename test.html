@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Arc Variants</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .arc-container {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+
+        svg {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Random Arc Variants</h1>
+    <div id="arcGallery"></div>
+
+    <script>
+        function drawRandomArc(c, cx, cy, radius, topWidth, startAngle = Math.PI / 2, endAngle = startAngle + Math.PI, outerType = "both", innerType = "both") {
+            if (!c || !c.svg) {
+                console.error("Canvas (c) or SVG context missing.");
+                return;
+            }
+
+            const createTangentialBezierCurve = (startX, startY, endX, endY, tangentX, tangentY) => {
+                const controlDistance = 50;
+                const controlX1 = startX + tangentX * controlDistance;
+                const controlY1 = startY + tangentY * controlDistance;
+
+                const dx = endX - startX;
+                const dy = endY - startY;
+                const angle = Math.atan2(dy, dx);
+                const controlX2 = endX - Math.cos(angle) * controlDistance;
+                const controlY2 = endY - Math.sin(angle) * controlDistance;
+
+                return {
+                    curve: `C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${endX} ${endY}`,
+                    tangentX: Math.cos(angle),
+                    tangentY: Math.sin(angle)
+                };
+            };
+
+            const createCorner = (startX, startY, endX, endY) => `L ${endX} ${endY}`;
+
+            const startXOuter = cx + (radius + topWidth) * Math.cos(startAngle);
+            const startYOuter = cy + (radius + topWidth) * Math.sin(startAngle);
+            const endXOuter = cx + (radius + topWidth) * Math.cos(endAngle);
+            const endYOuter = cy + (radius + topWidth) * Math.sin(endAngle);
+
+            const startXInner = cx + radius * Math.cos(startAngle);
+            const startYInner = cy + radius * Math.sin(startAngle);
+            const endXInner = cx + radius * Math.cos(endAngle);
+            const endYInner = cy + radius * Math.sin(endAngle);
+
+            let pathD = `M ${startXOuter} ${startYOuter}`;
+
+            const outerSegments = Math.floor(Math.random() * 6);
+            let currentX = startXOuter;
+            let currentY = startYOuter;
+            let tangentX = Math.cos(startAngle);
+            let tangentY = Math.sin(startAngle);
+            let stepAngle = (endAngle - startAngle) / (outerSegments + 1);
+
+            for (let i = 0; i < outerSegments; i++) {
+                const angle = startAngle + stepAngle * (i + 1);
+                const newX = cx + (radius + topWidth) * Math.cos(angle);
+                const newY = cy + (radius + topWidth) * Math.sin(angle);
+
+                if (outerType === "curves" || (outerType === "both" && Math.random() < 0.5)) {
+                    const result = createTangentialBezierCurve(currentX, currentY, newX, newY, tangentX, tangentY);
+                    pathD += result.curve;
+                    tangentX = result.tangentX;
+                    tangentY = result.tangentY;
+                } else {
+                    pathD += createCorner(currentX, currentY, newX, newY);
+                    tangentX = (newX - currentX) / Math.hypot(newX - currentX, newY - currentY);
+                    tangentY = (newY - currentY) / Math.hypot(newX - currentX, newY - currentY);
+                }
+
+                currentX = newX;
+                currentY = newY;
+            }
+
+            pathD += ` L ${endXOuter} ${endYOuter}`;
+            pathD += ` L ${endXInner} ${endYInner}`;
+
+            const innerSegments = Math.floor(Math.random() * 6);
+            currentX = endXInner;
+            currentY = endYInner;
+            tangentX = Math.cos(endAngle);
+            tangentY = Math.sin(endAngle);
+            stepAngle = (endAngle - startAngle) / (innerSegments + 1);
+
+            for (let i = 0; i < innerSegments; i++) {
+                const angle = endAngle - stepAngle * (i + 1);
+                const newX = cx + radius * Math.cos(angle);
+                const newY = cy + radius * Math.sin(angle);
+
+                if (innerType === "curves" || (innerType === "both" && Math.random() < 0.5)) {
+                    const result = createTangentialBezierCurve(currentX, currentY, newX, newY, tangentX, tangentY);
+                    pathD += result.curve;
+                    tangentX = result.tangentX;
+                    tangentY = result.tangentY;
+                } else {
+                    pathD += createCorner(currentX, currentY, newX, newY);
+                    tangentX = (newX - currentX) / Math.hypot(newX - currentX, newY - currentY);
+                    tangentY = (newY - currentY) / Math.hypot(newX - currentX, newY - currentY);
+                }
+
+                currentX = newX;
+                currentY = newY;
+            }
+
+            pathD += ` L ${startXInner} ${startYInner}`;
+            pathD += ` Z`;
+
+            const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            pathElement.setAttribute("d", pathD);
+            pathElement.setAttribute("fill", "black");
+            c.svg.appendChild(pathElement);
+        }
+
+        function generateSpecificArcs() {
+            const gallery = document.getElementById('arcGallery');
+            const types = [
+                { outerType: "curves", innerType: "curves" },
+                { outerType: "corners", innerType: "corners" },
+                { outerType: "curves", innerType: "corners" },
+                { outerType: "corners", innerType: "curves" },
+                { outerType: "both", innerType: "both" },
+                { outerType: "curves", innerType: "both" },
+                { outerType: "both", innerType: "corners" },
+                { outerType: "corners", innerType: "both" }
+            ];
+
+            types.forEach((type, index) => {
+                const container = document.createElement('div');
+                container.className = 'arc-container';
+
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("width", "200");
+                svg.setAttribute("height", "200");
+
+                const canvas = { svg };
+                drawRandomArc(canvas, 100, 100, 50, 20, Math.PI / 2, Math.PI * 1.5, type.outerType, type.innerType);
+
+                const label = document.createElement('div');
+                label.innerText = `Outer: ${type.outerType}, Inner: ${type.innerType}`;
+
+                container.appendChild(svg);
+                container.appendChild(label);
+                gallery.appendChild(container);
+            });
+        }
+
+        generateSpecificArcs();
+    </script>
+</body>
+
+</html>

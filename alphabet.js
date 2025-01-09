@@ -10,12 +10,12 @@ export let isIrregularDotted;
 export let stammParameters = {}; // Hinzufügen der Initialisierung
 export let dotSize;
 export let dotSpacing;
-export let arcType;
 export let numPolygonPoints;
 export let style; 
 export let serif; // Hinzufügen der Serif-Parameter
 export let serifType;
 export let serifHeight;
+export let topWidth;
 
 
 function initializeStammParameters() {
@@ -34,31 +34,7 @@ function initializeStammParameters() {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    const baselineSlider = document.getElementById('baselineSlider');
-    const xHeightSlider = document.getElementById('xHeightSlider');
-    const capHeightSlider = document.getElementById('capHeightSlider');
-    const ascenderSlider = document.getElementById('ascenderSlider');
-    const descenderSlider = document.getElementById('descenderSlider');
 
-    baselineSlider.addEventListener('input', updateValues);
-    xHeightSlider.addEventListener('input', updateValues);
-    capHeightSlider.addEventListener('input', updateValues);
-    ascenderSlider.addEventListener('input', updateValues);
-    descenderSlider.addEventListener('input', updateValues);
-
-    function updateValues() {
-        const baseline = parseInt(baselineSlider.value, 10);
-        const xHeight = parseInt(xHeightSlider.value, 10);
-        const capHeight = parseInt(capHeightSlider.value, 10);
-        const ascenderHeight = parseInt(ascenderSlider.value, 10);
-        const descenderHeight = parseInt(descenderSlider.value, 10);
-
-        generateAlphabet(baseline, capHeight, ascenderHeight, descenderHeight, xHeight);
-        displayGeneratedAlphabet(alphabetSVGs);
-        displayHelloWorld(alphabetSVGs);
-    }
-});
 
 
 
@@ -106,7 +82,7 @@ export function generateAlphabet() {
     dotSize = Math.random() * 110 + 5;
     dotSpacing = Math.random() * 60 + 1;
 
-    const fontColor = document.getElementById('colorPickerFont').value;
+    const fontColor = document.getElementById('secondary-color').value;
 
     numPolygonPoints = Math.floor(Math.random() * 8) + 1;
 
@@ -121,7 +97,9 @@ export function generateAlphabet() {
     const alphabetSVGs = {};
     letters.forEach(letter => {
         const svg = createSvg(width, baseline + ascenderHeight + descenderHeight);
-        drawLetter(svg, letter, width, baseline, capHeight, ascenderHeight, descenderHeight, xHeight, style, fontColor); // Stil hinzufügen
+
+      
+        drawLetter(svg, letter, 200, baseline, capHeight, ascenderHeight, descenderHeight, xHeight, style, fontColor); // Monospaced Breite fixieren
         alphabetSVGs[letter] = svg;
     });
 
@@ -129,7 +107,7 @@ export function generateAlphabet() {
         Object.values(alphabetSVGs).forEach(svg => {
             const wrapperDiv = document.createElement('div');
             wrapperDiv.classList.add('letter-wrapper');
-            wrapperDiv.style.width = '200px';
+            wrapperDiv.style.width = '200px'; // Feste Breite für Monospaced
             wrapperDiv.style.height = '200px';
             wrapperDiv.appendChild(svg);
             alphabetContainer.appendChild(wrapperDiv);
@@ -138,6 +116,10 @@ export function generateAlphabet() {
 
     return alphabetSVGs;
 }
+
+
+
+
 
 function createSvg(width, height) {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -164,7 +146,7 @@ export function generateLetterVariations(letter) {
     const xHeight = capHeight * 0.7;
     const baseline = capHeight + descenderHeight;
 
-    const fontColor = document.getElementById('colorPickerFont').value;
+    const fontColor = document.getElementById('secondary-color').value;
 
     const variations = [];
 
@@ -217,3 +199,6 @@ export function generateLetterVariations(letter) {
 
     return variations;
 }
+
+
+
