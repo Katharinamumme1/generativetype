@@ -6,6 +6,10 @@ body {
     padding: 0;
     margin: 0px;
 }
+html {
+    zoom: 100%;
+    box-sizing: border-box;
+}
 :root {
     --primary-color: #ffffff;
     /* Standard: Schwarz */
