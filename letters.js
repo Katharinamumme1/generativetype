@@ -4,6 +4,8 @@ import { drawCircle, drawArc } from './arcs_and_circles.js';
 import { drawStamm } from './stamm.js';
 import { drawSerif } from './serif.js';
 
+
+
 const FIXED_WIDTH = 500; // Set a fixed width for all letters
 
 export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeight, descenderHeight, xHeight, style, color) {
@@ -34,18 +36,17 @@ export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeig
 
     // Calculate the dynamic height based on the letter's vertical extents
     const dynamicHeight = Math.max(ascenderHeight + descenderHeight, xHeight);
-
-    // Set SVG dimensions with fixed width and dynamic height
-    svg.setAttribute('width', FIXED_WIDTH);
-    svg.setAttribute('height', dynamicHeight);
-    svg.setAttribute('viewBox', `0 -${descenderHeight} ${FIXED_WIDTH} ${dynamicHeight}`);
-
+    svg.setAttribute('viewBox', `-${FIXED_WIDTH / -50} -${descenderHeight} ${FIXED_WIDTH} ${dynamicHeight}`);
+    
     // Center the content horizontally
     const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
     group.setAttribute("transform", `translate(0, ${dynamicHeight / 2})`);
     svg.appendChild(group);
     c.svg = group; // Update reference to use the group for drawing
+    
 
+
+    
     if (drawFunctions[letter]) {
         drawFunctions[letter](c);
         if (style && style !== 'keinstyle') {
@@ -57,14 +58,70 @@ export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeig
     }
 }
 
+// Initialfarben
+let primaryColor = "#ffffff"; 
+let secondaryColor = "#000000"; 
+let outlineOnly = false; // Status für Outline-Mode
 
-function applyColorToElements(svg, color) {
-    const elements = svg.querySelectorAll('path, circle, rect, line, polygon');
-    elements.forEach(element => {
-        element.setAttribute('fill', color); // Set fill color
-        element.setAttribute('stroke', color); // Set stroke color (if necessary)
+// Event-Listener für Farbänderungen und Aktionen
+document.getElementById("primary-color").addEventListener("input", (event) => {
+    primaryColor = event.target.value;
+    applyColors();
+});
+
+document.getElementById("secondary-color").addEventListener("input", (event) => {
+    secondaryColor = event.target.value;
+    applyColors();
+});
+
+document.getElementById("swap-colors").addEventListener("click", () => {
+    [primaryColor, secondaryColor] = [secondaryColor, primaryColor];
+    applyColors();
+
+    // Farbwerte in den Inputs aktualisieren
+    document.getElementById("primary-color").value = primaryColor;
+    document.getElementById("secondary-color").value = secondaryColor;
+});
+
+document.getElementById("toggle-outline").addEventListener("click", () => {
+    outlineOnly = !outlineOnly; // Status umschalten
+    applyColors();
+});
+
+// Funktion: Farben anwenden
+function applyColors() {
+    // Farben auf CSS-Variablen anwenden
+    document.documentElement.style.setProperty('--primary-color', primaryColor);
+    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+
+    // SVG-Farben aktualisieren
+    const svgs = document.querySelectorAll('svg'); // Alle SVGs auf der Seite finden
+    svgs.forEach(svg => applyColorToElements(svg)); // Auf jedes SVG anwenden
+}
+
+// Funktion: Farben auf Elemente eines SVGs anwenden
+function applyColorToElements(svg) {
+    svg.querySelectorAll('*').forEach(element => {
+        if (['path', 'circle', 'rect'].includes(element.tagName)) {
+            if (outlineOnly) {
+                // Nur Outline: Füllung entfernen, Sekundärfarbe als Stroke
+                element.setAttribute('fill', 'none');
+                element.setAttribute('stroke', secondaryColor);
+            } else {
+                // Gefüllt: Füllung mit Primärfarbe, Stroke mit Sekundärfarbe
+                element.setAttribute('fill', secondaryColor);
+                element.setAttribute('stroke', secondaryColor);
+            }
+        }
     });
 }
+
+// Farben initial anwenden
+applyColors();
+
+
+
+
 
 export const drawFunctions = {
     'A': drawA, 'B': drawB, 'C': drawC, 'D': drawD, 'E': drawE, 'F': drawF, 'G': drawG, 'H': drawH, 'I': drawI, 'J': drawJ,
