@@ -17,17 +17,6 @@
 
     <style>
 
- 
-
-    #mandala-canvas {
-        width: 100%;
-        height: 100%;
-        background-color: none;
-    }
-    #mandala-canvas-container {
-        width: 100%;
-        height: 100%;
-    }
     </style>
 </head>
 
@@ -41,7 +30,7 @@
             <ul class="shadow-button-set">
                 <li><button id="swap-colors">swap</button></li>
                 <li><button>About</button></li>
-    
+
                 <li><button id="circle-button" class="shape-button">
                         <i class="fas fa-circle"></i>
                     </button></li>
@@ -58,51 +47,38 @@
         <a href="styling.html"><button class="nav-button">Styling</button></a>
         <a href="poster.html"><button class="nav-button">Poster</button></a>
     </div>
-
+    
 <div class="main">
 
     <section class="subnav-container">
-        <button class="nav-button">Mandala</button>
-        <button class="nav-button">Kaleidoskop</button>
-        <button class="nav-button">Voronoi</button>
-        <button class="nav-button">Grid</button>
-        <button class="nav-button">Brush</button>
-        <button class="nav-button">Distortion</button>
+            <button class="nav-button">Mandala</button>
+            <button class="nav-button">Kaleidoskop</button>
+            <button class="nav-button">Voronoi</button>
+            <button class="nav-button">Grid</button>
+            <button class="nav-button">Brush</button>
+            <button class="nav-button">Distortion</button>
     </section>
 
-    <div class="category-container" id="mandala">
+    <div class="category-container" >
 
         <div class="settings-container">
-            <label for="mandala-section-count">Anzahl der Abschnitte:</label>
-            <input type="number" id="mandala-section-count" value="6" min="2" max="12">
-
-            <label for="mandala-grid-toggle">Hilfsgitter einblenden:</label>
-            <input type="checkbox" id="mandala-grid-toggle">
-
-            <label for="mandala-stroke-width">Strichstärke:</label>
-            <input type="number" id="mandala-stroke-width" value="2" min="1" max="10">
-
-            <label for="mandala-color-picker">Farbe wählen:</label>
-            <input type="color" id="mandala-color-picker" value="#000000">
-
         </div>
 
 
-            <div class="workspace">
-                <div id="mandala-canvas-container">
-                    <svg id="mandala-canvas">
-            <!-- Mandala wird hier generiert -->
-                    </svg>
-            </div>
+        <div class="workspace">
+
+        </div>
+        
     </div>
 </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <script src="color-settings.js"></script>
-    <script src="mandala.js"></script>
-    <script src="main.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="color-settings.js"></script>
+        <script src="main.js"></script>
+        <script src="voronoi.js"></script>
 
 </body>
 

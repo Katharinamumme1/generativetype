@@ -5,15 +5,17 @@ body {
     color:var(--secondary-color);
     margin: 0px;
     padding: 0px;
-    max-width: 100vw;
+    width: 100vw;
     height: 100vh;
-
-
-
+    font-size: 2rem;
 }
 html {
-    box-sizing: border-box;
+
 }
+*{
+    border: solid 2px var();
+}
+
 :root {
     --primary-color: #ffffff;
     /* Standard: Schwarz */
@@ -24,15 +26,15 @@ html {
 
 .banner{
     width: 100vw;
-    height: 120px;
-    border: var(--secondary-color) solid 2px;
-    padding-top: 10px;
+    height: 30px;
+    border-bottom: var(--secondary-color) solid 2px;
+    padding-top: 5px;
     padding-bottom: 5px;
-    padding-left: 20px;
-        font-size: 5rem;
-            text-transform: uppercase;
-            position: relative;
-        color: var(--secondary-color);
+    padding-left: 10px;
+    text-transform: uppercase;
+    position: relative;
+    color: var(--secondary-color);
+    font-size: 1.5rem;
 
 }
 
@@ -45,12 +47,12 @@ html {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 200px;
+    height: 100%;
 }
 #primary-color,
 #secondary-color {
-    width: 100px;
-    height: 100px;
+    width: 40px;
+    height: 40px;
     border: var(--secondary-color) 2px solid;
     padding: 0%;
 }
@@ -75,16 +77,14 @@ flex-grow: calc();
 .letter-svg{
     border: var(--secondary-color) solid 2px;
     border-radius: 50%;
-    width:500px;
-    height: 500px;
+    width:160px;
+    height: 160px;
     transition: all 0.3s ease-in-out;
 }
 
 .letter-svg:hover {
-width: 1000px;
+width: 320px;
 transition: ease-in-out 1s;
-
-
 }
 
 
@@ -92,27 +92,19 @@ transition: ease-in-out 1s;
 
 
 
-.no-border-radius {
-    border-radius: 0 !important;
-}
+
 
 
         
-
-        
-                #textCanvasContainer {
-                    white-space: nowrap;
-                    overflow-x: auto;
-                }
 
                 .letter-button{
-                    width: 200px;
-                    height: 200px;
+                    width: 50px;
+                    height: 50px;
 
                     border-radius: 50%;
 
                     font-size: 2.5vmin;
-                                    border: 3px solid black;
+                                    border: 2px solid var(--secondary-color);
                                     background: var(--primary-color);
                                     color: var(--secondary-color);
                 }
@@ -125,7 +117,7 @@ transition: ease-in-out 1s;
 
     &>li {
         display: inline-flex;
-        background: black;
+        background: var(--secondary-color);
 
         &:is(:hover, :focus-within)>button:not(:active) {
             --distance: -10px;
@@ -135,7 +127,7 @@ transition: ease-in-out 1s;
     & button {
         appearance: none;
         outline: none;
-        font-size: 2.5vmin;
+        font-size: 2vmin;
         border: 3px solid var(--secondary-color);
         color: var(--secondary-color);
         background-color: var(--primary-color);
@@ -157,39 +149,47 @@ transition: ease-in-out 1s;
 }
 
 .nav-button{
-    width: 600px;
-    height: 200px;
+    width: 100px;
+    height:40px;
 border-radius: 50%;
-padding: 20px;
-    font-size: 2.5vmin;
-    border: 3px solid black;
+padding: 5px;
+    border: 2px solid var(--secondary-color);
     background: var(--primary-color);
     color: var(--secondary-color);
 }
+.main{
+  height:  90vh;
 
+}
 .nav-container{
-    height: 200px;
+    height: 50px;
     width: 100%;
-    border: var(--secondary-color) 2px solid;
+    border-bottom: var(--secondary-color) 2px solid;
     overflow: scroll;
+    border: solid 1.5px var(--secondary-color);
 }
 .subnav-container{
-    height: 600px;
+    height: 12%;
         width: 100%;
-        border: red 2px solid;
     overflow: scroll;
+    border: solid 1.5px var(--secondary-color);
 }
 
 .settings-container{
-width: 1000px;
-height: 3000px;
-border: solid red 5px;
+width: 15%;
+height: 100%;
+    border: solid 1.5px var(--secondary-color);
+    font-size: 1.5rem;
 }
 .category-container{
-    display: flex;
+width: 100%;
+height: 85%;
+display: flex;
+    border: solid 1.5px var(--secondary-color);
 }
 .workspace{
-   width:  100%;
-   border: blue solid 4px;
+   width:  85%;
+   height: 100%;
     overflow: scroll;
+    border: solid 1.5px var(--secondary-color);
 }

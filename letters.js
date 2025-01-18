@@ -36,7 +36,7 @@ export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeig
 
     // Calculate the dynamic height based on the letter's vertical extents
     const dynamicHeight = Math.max(ascenderHeight + descenderHeight, xHeight);
-    svg.setAttribute('viewBox', `-${FIXED_WIDTH / -50} -${descenderHeight} ${FIXED_WIDTH} ${dynamicHeight}`);
+    svg.setAttribute('viewBox', `-${FIXED_WIDTH /100} -${descenderHeight} ${FIXED_WIDTH} ${dynamicHeight}`);
     
     // Center the content horizontally
     const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
