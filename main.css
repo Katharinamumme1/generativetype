@@ -171,11 +171,13 @@ padding: 20px;
     height: 200px;
     width: 100%;
     border: var(--secondary-color) 2px solid;
+    overflow: scroll;
 }
 .subnav-container{
     height: 600px;
         width: 100%;
         border: red 2px solid;
+    overflow: scroll;
 }
 
 .settings-container{
@@ -189,4 +191,5 @@ border: solid red 5px;
 .workspace{
    width:  100%;
    border: blue solid 4px;
+    overflow: scroll;
 }
