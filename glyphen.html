@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ALPHABET GENERATOR</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg2pdf.js@1.3.6/dist/svg2pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.0.16/svg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.draggable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.resize.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.select.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/gif.js"></script>
+</head>
+
+<body>
+    <div id="main-settings" class="banner">
+        <div id="page_settings">
+            <label for="primary-color"></label>
+            <input class="colorPicker" type="color" id="primary-color" value="#ffffff">
+            <label for="secondary-color"></label>
+            <input class="colorPicker" type="color" id="secondary-color" value="#000000">
+            <ul class="shadow-button-set">
+                <li><button id="swap-colors">swap</button></li>
+                <li><button>About</button></li>
+
+                <li><button id="circle-button" class="shape-button">
+                        <i class="fas fa-circle"></i>
+                    </button></li>
+                <li><button id="rectangle-button" class="shape-button">
+                        <i class="fas fa-square"></i></button></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="header" class="banner">
+        <div>
+            <span>Generative Fonts - Create Your Unique Typeface!</span>
+        </div>
+    </div>
+    <div class="nav-container">
+        <a href="glyphen.html"><button class="nav-button">Glyphen</button></a>
+        <a href="mandala.html"><button class="nav-button">Patterns</button></a>
+        <a href="styling.html"><button class="nav-button">Styling</button></a>
+        <a href="poster.html"><button class="nav-button">Poster</button></a>
+    </div>
+
+    <!-- Letter Section -->
+<div class="subnav-container">
+        <div>
+            <div id="letterButtonsContainer" class="buttons-container">
+                <!-- Buttons for letters will be generated here -->
+            </div>
+            <button id="alphabetButton" class="letter-button">A-Z</button>
+</div>
+    <div class="category-container">
+            <div class="settings-container">
+                            <!-- Button for generating the alphabet or letter variations -->
+                            <button id="generateButton" class="icon-button"><i class="fas fa-random"></i></button>
+                            <!-- Alphabet button with the same class as letter buttons -->
+                            <button id="toggle-outline">Toggle Outline Only</button>
+            </div>
+            <div class="workspace">
+                <div id="letterContainer" class="letter-container"></div> <!-- Updated to letterContainer -->
+            </div>
+        </div>
+    
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="alphabet.js" type="module"></script>
+    <script src="letters.js" type="module"></script>
+    <script src="color-settings.js"></script>
+
+    <script type="module">
+        import { generateAlphabet, generateLetterVariations } from './alphabet.js';
+        import { drawLetter } from './letters.js';
+
+        let alphabetSVGs = {};
+        let currentLetter = "A"; // Set default letter to "A"
+        const alphabetKeys = [];
+
+        let isAlphabetMode = false; // Flag to check if Alphabet mode is active
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initially generate the alphabet and show the "A" variants on reload
+            alphabetSVGs = generateAlphabet();
+            alphabetKeys.push(...Object.keys(alphabetSVGs));
+            createLetterButtons();
+            generateAndDisplayLetterVariations(currentLetter); // Show the variations for the letter "A" on reload
+
+            // Event listener for the "Alphabet" button
+            document.getElementById('alphabetButton').addEventListener('click', () => {
+                // When Alphabet button is clicked, generate the whole alphabet
+                isAlphabetMode = true; // Set Alphabet mode to true
+                generateAndDisplayAlphabet(); // Generate the whole alphabet
+            });
+
+            // Event listener for the "Generate" button
+            document.getElementById('generateButton').addEventListener('click', () => {
+                const letterContainer = document.getElementById('letterContainer');
+
+                if (isAlphabetMode) {
+                    // Generate the whole alphabet
+                    generateAndDisplayAlphabet(); // Display the whole alphabet
+                } else {
+                    // Generate the letter variations if a letter is selected
+                    generateAndDisplayLetterVariations(currentLetter);
+                }
+            });
+        });
+
+        function generateAndDisplayAlphabet() {
+            const letterContainer = document.getElementById('letterContainer');
+            letterContainer.innerHTML = ''; // Clear previous contents
+            alphabetSVGs = generateAlphabet(); // Regenerate the entire alphabet
+
+            for (const letter in alphabetSVGs) {
+                const svg = alphabetSVGs[letter];
+                svg.dataset.letter = letter;
+
+                // Füge eine gemeinsame Klasse zu jedem Letter SVG hinzu
+                svg.classList.add('letter-svg');
+                letterContainer.appendChild(svg);
+            }
+        }
+
+        function displayGeneratedAlphabet(alphabet) {
+            const letterContainer = document.getElementById('letterContainer');
+            letterContainer.innerHTML = ''; // Clear previous contents
+            for (const letter in alphabet) {
+                const svg = alphabet[letter];
+                svg.dataset.letter = letter;
+                letterContainer.appendChild(svg);
+            }
+        }
+
+        function createLetterButtons() {
+            const buttonsContainer = document.getElementById('letterButtonsContainer');
+            buttonsContainer.innerHTML = '';
+
+            alphabetKeys.forEach((letter) => {
+                const button = document.createElement('button');
+                button.classList.add('letter-button');
+                button.textContent = letter;
+                button.addEventListener('click', () => {
+                    currentLetter = letter; // Select the letter
+                    isAlphabetMode = false; // Switch to letter mode
+                    generateAndDisplayLetterVariations(letter);
+                });
+                buttonsContainer.appendChild(button);
+            });
+        }
+
+        function generateAndDisplayLetterVariations(letter) {
+            if (!letter) return;
+
+            const variations = generateLetterVariations(letter);
+            const letterContainer = document.getElementById('letterContainer');
+            letterContainer.innerHTML = ''; // Clear previous variations
+
+            variations.forEach((variation) => {
+                // Füge ebenfalls eine gemeinsame Klasse zu jeder Variation hinzu
+                variation.classList.add('letter-svg');
+                letterContainer.appendChild(variation);
+            });
+        }
+    </script>
+    <script src="main.js"></script>
+
+</body>
+
+</html>

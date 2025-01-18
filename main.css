@@ -3,14 +3,15 @@ body {
     font-family: 'Roboto', 'Helvetica', Arial, sans-serif;
     background-color: var(--primary-color);
     color:var(--secondary-color);
-    margin: 0;
-    padding: 0;
     margin: 0px;
+    padding: 0px;
+    max-width: 100vw;
+    height: 100vh;
+
 
 
 }
 html {
-    zoom: 0%;
     box-sizing: border-box;
 }
 :root {
@@ -25,7 +26,6 @@ html {
     width: 100vw;
     height: 120px;
     border: var(--secondary-color) solid 2px;
-
     padding-top: 10px;
     padding-bottom: 5px;
     padding-left: 20px;
@@ -35,33 +35,8 @@ html {
         color: var(--secondary-color);
 
 }
-#header{
-
-    overflow: hidden;
-}
 
 
-.marquee {
-
-    display: inline-block;
-    white-space: nowrap;
-    animation: scrollText 10s linear infinite;
-}
-
-.marquee span {
-    display: inline-block;
-    padding-left: 100%;
-}
-
-@keyframes scrollText {
-    0% {
-        transform: translateX(100%);
-    }
-
-    100% {
-        transform: translateX(-100%);
-    }
-}
 
 
 #page_settings{
@@ -79,26 +54,8 @@ html {
     border: var(--secondary-color) 2px solid;
     padding: 0%;
 }
-.no-border-radius {
-    border-radius: 0%;
-}
-main {
 
-    width: 100%;
-    border: var(--secondary-color) 2px;
-}
 
-section {
-
-    border: 2px solid var(--secondary-color);
-    border-radius: 50;
-    width: 100vw;
-    height: 90vh;
-
-}
-#letterSection{
-    overflow: scroll;
-}
 
 
 
@@ -115,7 +72,7 @@ flex-grow: calc();
 
 }
 
-svg{
+.letter-svg{
     border: var(--secondary-color) solid 2px;
     border-radius: 50%;
     width:500px;
@@ -123,7 +80,7 @@ svg{
     transition: all 0.3s ease-in-out;
 }
 
-svg:hover {
+.letter-svg:hover {
 width: 1000px;
 transition: ease-in-out 1s;
 
@@ -131,50 +88,11 @@ transition: ease-in-out 1s;
 }
 
 
-.icon-button {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 10px 20px;
-    border: 1px solid var(--secondary-color);
-
-}
 
 
 
-button{
-            font-size: 2.5vmin;
-                border: 3px solid black;
-                background: var(--primary-color);
-color: var(--secondary-color);
-}
-#letterSelect {
-    font-size: 2rem;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid var(--secondary-color);
-    width: 100%;
-    margin-bottom: 20px;
-}
 
-#textCanvasContainer {
-    border: 1px solid var(--secondary-color);
-    padding: 20px;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-}
-
-#textCanvas {
-    width: 100%;
-    height: auto;
-}
 .no-border-radius {
-    transition: all 1s ease;
     border-radius: 0 !important;
 }
 
@@ -190,9 +108,13 @@ color: var(--secondary-color);
                 .letter-button{
                     width: 200px;
                     height: 200px;
-                    background-color: none;
+
                     border-radius: 50%;
-                    border: solid 2px var(--secondary-color);
+
+                    font-size: 2.5vmin;
+                                    border: 3px solid black;
+                                    background: var(--primary-color);
+                                    color: var(--secondary-color);
                 }
 
 @use postcss-nested;
@@ -228,3 +150,43 @@ color: var(--secondary-color);
     }
 }
 
+
+* {
+    transition: border-radius 0.3s ease;
+    /* Übergang für border-radius */
+}
+
+.nav-button{
+    width: 600px;
+    height: 200px;
+border-radius: 50%;
+padding: 20px;
+    font-size: 2.5vmin;
+    border: 3px solid black;
+    background: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.nav-container{
+    height: 200px;
+    width: 100%;
+    border: var(--secondary-color) 2px solid;
+}
+.subnav-container{
+    height: 600px;
+        width: 100%;
+        border: red 2px solid;
+}
+
+.settings-container{
+width: 1000px;
+height: 3000px;
+border: solid red 5px;
+}
+.category-container{
+    display: flex;
+}
+.workspace{
+   width:  100%;
+   border: blue solid 4px;
+}
