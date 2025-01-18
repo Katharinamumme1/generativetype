@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ALPHABET GENERATOR</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/svg2pdf.js@1.3.6/dist/svg2pdf.min.js"></script>
@@ -53,7 +53,7 @@
 
     </div>
     <div class="nav-container">
-        <a href="index.html"><button class="nav-button">Glyphen</button></a>
+        <a href="/index.html"><button class="nav-button">Glyphen</button></a>
         <a href="mandala.html"><button class="nav-button">Patterns</button></a>
         <a href="styling.html"><button class="nav-button">Styling</button></a>
         <a href="poster.html"><button class="nav-button">Poster</button></a>
@@ -61,14 +61,16 @@
 
 <div class="main">
 
-    <section class="subnav-container">
-        <button class="nav-button">Mandala</button>
-        <button class="nav-button">Kaleidoskop</button>
-        <button class="nav-button">Voronoi</button>
-        <button class="nav-button">Grid</button>
-        <button class="nav-button">Brush</button>
-        <button class="nav-button">Distortion</button>
-    </section>
+        <section class="subnav-container">
+            <a href="mandala.html"><button class="nav-button">Mandala</button></a>
+            <a href="delaunay.html"><button class="nav-button">delaunay</button></a>
+            <a href="custombrush.html"><button class="nav-button">Brush</button></a>
+            <a href="grid.html"><button class="nav-button">Grid</button></a>
+            <a href="distortion.html"><button class="nav-button">Distortion</button></a>
+            <a href="mandala.html"><button class="nav-button">Kaleidoskop</button></a>
+            <a href="mandala.html"><button class="nav-button">voronoi</button></a>
+            <a href="mandala.html"><button class="nav-button">Tesselation</button></a>
+        </section>
 
     <div class="category-container" id="mandala">
 
@@ -82,8 +84,6 @@
             <label for="mandala-stroke-width">Strichstärke:</label>
             <input type="number" id="mandala-stroke-width" value="2" min="1" max="10">
 
-            <label for="mandala-color-picker">Farbe wählen:</label>
-            <input type="color" id="mandala-color-picker" value="#000000">
 
         </div>
 
@@ -100,9 +100,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <script src="color-settings.js"></script>
+    <script src="/color-settings.js"></script>
     <script src="mandala.js"></script>
-    <script src="main.js"></script>
+    <script src="/main.js"></script>
 
 </body>
 

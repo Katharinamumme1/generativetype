@@ -3,18 +3,18 @@ const mandalaCanvas = document.getElementById('mandala-canvas');
 const mandalaSectionCountInput = document.getElementById('mandala-section-count');
 const mandalaGridToggle = document.getElementById('mandala-grid-toggle');
 const mandalaStrokeWidthInput = document.getElementById('mandala-stroke-width');
-const mandalaColorPicker = document.getElementById('mandala-color-picker');
+const secondaryColorPicker = document.getElementById('secondary-color');
+const swapColorsButton = document.getElementById('swap-colors');
 
 let sectionCount = parseInt(mandalaSectionCountInput.value);
 let drawing = false;
 let lastPoint = null;
 let gridEnabled = false;
 let strokeWidth = parseInt(mandalaStrokeWidthInput.value);
-let strokeColor = mandalaColorPicker.value;
+let strokeColor = secondaryColorPicker.value; // Sekundärfarbe als Standard setzen
 
 // Funktion zum Zeichnen des Mandalas
 function drawMandala() {
-    console.log('Drawing mandala...');
     mandalaCanvas.innerHTML = ''; // Clear previous drawing
     const centerX = mandalaCanvas.width.baseVal.value / 2;
     const centerY = mandalaCanvas.height.baseVal.value / 2;
@@ -31,8 +31,8 @@ function drawMandala() {
         line.setAttribute('y1', centerY);
         line.setAttribute('x2', x1);
         line.setAttribute('y2', y1);
-        line.setAttribute('stroke', 'black');
-        line.setAttribute('stroke-width', 1);
+        line.setAttribute('stroke', strokeColor);
+        line.setAttribute('stroke-width', strokeWidth);
         mandalaCanvas.appendChild(line);
     }
 
@@ -44,7 +44,6 @@ function drawMandala() {
 
 // Funktion zum Zeichnen der Hilfslinien
 function drawGrid() {
-    console.log('Drawing grid...');
     const gridSize = 20;
     const width = mandalaCanvas.width.baseVal.value;
     const height = mandalaCanvas.height.baseVal.value;
@@ -56,7 +55,8 @@ function drawGrid() {
         line.setAttribute('y1', 0);
         line.setAttribute('x2', x);
         line.setAttribute('y2', height);
-        line.setAttribute('class', 'mandala-grid-line');
+        line.setAttribute('stroke', strokeColor);
+        line.setAttribute('stroke-width', 0.5);
         mandalaCanvas.appendChild(line);
     }
 
@@ -67,14 +67,14 @@ function drawGrid() {
         line.setAttribute('y1', y);
         line.setAttribute('x2', width);
         line.setAttribute('y2', y);
-        line.setAttribute('class', 'mandala-grid-line');
+        line.setAttribute('stroke', strokeColor);
+        line.setAttribute('stroke-width', 0.5);
         mandalaCanvas.appendChild(line);
     }
 }
 
 // Funktion zum Zeichnen einer Linie
 function drawLine(x1, y1, x2, y2) {
-    console.log('Drawing line:', x1, y1, x2, y2);
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('x1', x1);
     line.setAttribute('y1', y1);
@@ -107,7 +107,6 @@ function reflectAndDrawLine(x1, y1, x2, y2) {
 
 // Event Listener für das Drücken der Maus
 mandalaCanvas.addEventListener('mousedown', (e) => {
-    console.log('Mouse down event triggered');
     drawing = true;
     const rect = mandalaCanvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -121,6 +120,8 @@ mandalaCanvas.addEventListener('mousemove', (e) => {
         const rect = mandalaCanvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
+
+        strokeColor = secondaryColorPicker.value; // Update strokeColor on every move
 
         if (gridEnabled) {
             const gridSize = 20;
@@ -137,7 +138,6 @@ mandalaCanvas.addEventListener('mousemove', (e) => {
 
 // Event Listener für das Loslassen der Maus
 mandalaCanvas.addEventListener('mouseup', () => {
-    console.log('Mouse up event triggered');
     drawing = false;
     lastPoint = null;
 });
@@ -159,10 +159,30 @@ mandalaStrokeWidthInput.addEventListener('input', () => {
     strokeWidth = parseInt(mandalaStrokeWidthInput.value);
 });
 
-// Event Listener für die Farbauswahl
-mandalaColorPicker.addEventListener('input', () => {
-    strokeColor = mandalaColorPicker.value;
+// Event Listener für die Sekundärfarbe
+secondaryColorPicker.addEventListener('input', () => {
+    strokeColor = secondaryColorPicker.value; // Aktualisiere die Stroke-Farbe
+    updateExistingLines(); // Aktualisiere alle vorhandenen Linien
 });
+
+// Event Listener für das Tauschen der Farben
+swapColorsButton.addEventListener('click', () => {
+    const primaryColorPicker = document.getElementById('primary-color');
+    const tempColor = primaryColorPicker.value;
+    primaryColorPicker.value = secondaryColorPicker.value;
+    secondaryColorPicker.value = tempColor;
+
+    strokeColor = secondaryColorPicker.value; // Aktualisiere die Stroke-Farbe
+    updateExistingLines(); // Aktualisiere alle vorhandenen Linien
+});
+
+// Funktion zum Aktualisieren aller vorhandenen Linien
+function updateExistingLines() {
+    const lines = mandalaCanvas.querySelectorAll('line');
+    lines.forEach(line => {
+        line.setAttribute('stroke', strokeColor);
+    });
+}
 
 // Initiales Zeichnen
 drawMandala();

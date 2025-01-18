@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ALPHABET GENERATOR</title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg2pdf.js@1.3.6/dist/svg2pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.0.16/svg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.draggable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.resize.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.select.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/gif.js"></script>
+
+    <style>
+ #distortlines_canvas{
+    width: 100%;
+    height: 100%;
+ }
+    </style>
+</head>
+
+<body>
+    <div id="main-settings" class="banner">
+        <div id="page_settings">
+            <label for="primary-color"></label>
+            <input class="colorPicker" type="color" id="primary-color" value="#ffffff">
+            <label for="secondary-color"></label>
+            <input class="colorPicker" type="color" id="secondary-color" value="#000000">
+            <ul class="shadow-button-set">
+                <li><button id="swap-colors">swap</button></li>
+                <li><button>About</button></li>
+
+                <li><button id="circle-button" class="shape-button">
+                        <i class="fas fa-circle"></i>
+                    </button></li>
+                <li><button id="rectangle-button" class="shape-button">
+                        <i class="fas fa-square"></i></button></li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+    <div class="nav-container">
+        <a href="/index.html"><button class="nav-button">Glyphen</button></a>
+        <a href="mandala.html"><button class="nav-button">Patterns</button></a>
+        <a href="styling.html"><button class="nav-button">Styling</button></a>
+        <a href="poster.html"><button class="nav-button">Poster</button></a>
+    </div>
+
+    <div class="main">
+
+        <section class="subnav-container">
+            <a href="mandala.html"><button class="nav-button">Mandala</button></a>
+            <a href="delaunay.html"><button class="nav-button">delaunay</button></a>
+            <a href="custombrush.html"><button class="nav-button">Brush</button></a>
+            <a href="grid.html"><button class="nav-button">Grid</button></a>
+            <a href="distortion.html"><button class="nav-button">Distortion</button></a>
+            <a href="mandala.html"><button class="nav-button">Kaleidoskop</button></a>
+            <a href="mandala.html"><button class="nav-button">voronoi</button></a>
+            <a href="mandala.html"><button class="nav-button">Tesselation</button></a>
+        </section>
+
+        <div class="category-container" id="mandala">
+
+            <div class="settings-container">
+            <label for="layout">Layout:</label>
+            <select id="layout">
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+                <option value="grid">Grid</option>
+            </select>
+            
+            <label for="lineCount">Line Count:</label>
+            <input type="range" id="lineCount" min="10" max="100" value="30">
+            <span id="lineCountValue">30</span>
+            
+            <label for="amplitude">Amplitude:</label>
+            <input type="range" id="amplitude" min="1" max="50" value="20">
+            <span id="amplitudeValue">20</span>
+            
+            <label for="brushStrength">Brush Strength:</label>
+            <input type="range" id="brushStrength" min="1" max="200" value="70">
+            <span id="brushStrengthValue">30</span>
+            
+            <label for="lineWidth">Line Width:</label>
+            <input type="range" id="lineWidth" min="1" max="10" value="1.5">
+            <span id="lineWidthValue">2</span>
+            
+            <label for="lineColor">Line Color:</label>
+            <input type="color" id="lineColor" value="#ffffff">
+            
+            <label for="distortionType">Distortion:</label>
+            <select id="distortionType">
+                <option value="vertical">Vertical</option>
+                <option value="horizontal">Horizontal</option>
+                <option value="radial">Radial</option>
+                <option value="chaotic">Chaotic</option>
+                <option value="wave">Wave</option>
+                <option value="vortex">Vortex</option>
+                <option value="shear">Shear</option>
+                <option value="gravity">Gravity</option>
+                <option value="collision">Collision</option>
+                <option value="elastic">Elastic</option>
+                <option value="magnetic">Magnetic</option>
+                <option value="bulge">Bulge</option>
+                <option value="sharp">Sharp</option>
+            </select>
+            <div class="download-icon" title="Download SVG">⬇</div>
+            </div>
+
+
+            <div class="workspace">
+                            <svg id="distortlines_canvas"></svg>
+
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="/color-settings.js"></script>
+        <script src="distortion.js"></script>
+        <script src="/main.js"></script>
+
+</body>
+
+</html>
