@@ -1,0 +1,95 @@
+/* Grundlegendes Styling */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #ffffff;
+	color: #000000;
+	box-sizing: border-box;
+}
+
+.container {
+	max-width: 95%;
+	margin: 0 auto;
+	padding: 20px;
+	text-align: left;
+}
+
+header h1 {
+	font-size: 24px;
+	margin-bottom: 20px;
+	font-weight: normal;
+}
+
+/* Hochladen-Bereich */
+.upload-area {
+	margin-bottom: 20px;
+}
+
+.upload-label {
+	display: inline-block;
+	padding: 10px 15px;
+	border: 1px solid #000000;
+	cursor: pointer;
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+#font-upload {
+	display: none;
+}
+
+/* Glyphen-Grid */
+.glyph-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	/* Passt sich an die Breite an */
+	gap: 10px;
+	margin-top: 20px;
+	align-items: center;
+	justify-items: center;
+}
+
+.glyph {
+	border: 1px solid #000000;
+	/* Einfacher schwarzer Rahmen */
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.glyph svg {
+	width: 100%;
+	/* Vollständig responsive */
+	height: auto;
+}
+
+/* Download-Button */
+.download-btn {
+	padding: 10px 15px;
+	margin-top: 20px;
+	border: 1px solid #000000;
+	background: none;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.download-btn:disabled {
+	border-color: #cccccc;
+	color: #cccccc;
+	cursor: not-allowed;
+}
+
+/* Slider-Bereich */
+.filter-controls label {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 14px;
+}
+
+.filter-controls input[type="range"] {
+	width: 20%;
+
+	/* Volle Breite der Sliders */
+}

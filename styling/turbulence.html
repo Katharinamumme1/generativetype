@@ -13,15 +13,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.draggable.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.resize.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.select.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/gif.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
     <script src="https://unpkg.com/delaunator@5.0.0/delaunator.min.js"></script>
     <script src="https://d3js.org/d3-voronoi.v1.min.js"></script>
-
     <style>
-#drawingSVG-delaunay{
-    width: 100%;
-    height: 100%;
-}
+        #grid-container{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        /* Deine bestehenden CSS-Stile */
     </style>
 </head>
 
@@ -45,59 +47,68 @@
         </div>
     </div>
 
-    </div>
     <div class="nav-container">
         <a href="/index.html"><button class="nav-button">Glyphen</button></a>
-        <a href="mandala.html"><button class="nav-button">Patterns</button></a>
-        <a href="/styling/turbulence.html"><button class="nav-button">Styling</button></a>
+        <a href="/pattern/mandala.html"><button class="nav-button">Patterns</button></a>
+        <a href="turbulence.html"><button class="nav-button">Styling</button></a>
         <a href="poster.html"><button class="nav-button">Poster</button></a>
     </div>
 
     <div class="main">
 
         <section class="subnav-container">
-        <a href="mandala.html"><button class="nav-button">Mandala</button></a>
-        <a href="delaunay.html"><button class="nav-button">delaunay</button></a>
-        <a href="custombrush.html"><button class="nav-button">Brush</button></a>
-            <a href="grid.html"><button class="nav-button">Grid</button></a>
-        <a href="distortion.html"><button class="nav-button">Distortion</button></a>
-        <a href="mandala.html"><button class="nav-button">Kaleidoskop</button></a>
-        <a href="mandala.html"><button class="nav-button">voronoi</button></a>
-        <a href="mandala.html"><button class="nav-button">Tesselation</button></a>
+            <a href="turbulence.html"><button class="nav-button">SVG Turbulence</button></a>
+            <a href="displacmentmap.html"><button class="nav-button">displacmentmap</button></a>
         </section>
 
         <div class="category-container">
 
             <div class="settings-container">
-                                <label for="lineColor">Farbe:</label>
-                                <input type="color" id="lineColor" value="#ff0000">
+                <label for="font-upload" class="upload-label">Schriftart hochladen</label>
+                <input type="file" id="font-upload" accept=".ttf, .otf, .woff, .woff2">
 
-                                                <label for="lineWidth">Strichbreite:</label>
-                                                <input type="number" id="lineWidth" value="2" min="1" max="10">
-                    <label for="lineStyle">Linetype:</label>
-                    <select id="lineStyle">
-                        <option value="solid">Durchgezogen</option>
-                        <option value="dashed">Gestrichelt</option>
-                        <option value="dotted">Punktiert</option>
-                    </select>
-        <button id="downloadBtn">Download SVG</button>
+                <label for="svg-upload" class="upload-label">SVG oder Vektorgrafik hochladen</label>
+                <input type="file" id="svg-upload" accept=".svg, .eps, .ai">
+
+                <label>
+                    Base Frequency X:
+                    <input type="range" id="baseFrequencyX" min="0.01" max="0.2" step="0.01" value="0.05">
+                </label>
+                <label>
+                    Base Frequency Y:
+                    <input type="range" id="baseFrequencyY" min="0.01" max="0.2" step="0.01" value="0.05">
+                </label>
+                <label>
+                    Num Octaves:
+                    <input type="range" id="numOctaves" min="1" max="5" step="1" value="2">
+                </label>
+                <label>
+                    Scale:
+                    <input type="range" id="scale" min="10" max="50" step="5" value="20">
+                </label>
+
+                <button id="download-font" class="download-btn" disabled>Herunterladen</button>
             </div>
-
 
             <div class="workspace">
-                            <svg id="drawingSVG-delaunay"></svg>
+                <div id="grid-container" class="glyph-grid"></div>
+                <svg width="0" height="0">
+                    <filter id="turbulenceFilter">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" result="turbulence" />
+                        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R"
+                            yChannelSelector="G" />
+                    </filter>
+                </svg>
             </div>
-
         </div>
     </div>
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="/color-settings.js"></script>
     <script src="/main.js"></script>
-    <script src="delaunay.js"></script>
+    <script src="turbulence.js"></script>
 
 </body>
 
