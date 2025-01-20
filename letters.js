@@ -6,7 +6,7 @@ import { drawSerif } from './serif.js';
 
 
 
-const FIXED_WIDTH = 500;
+const FIXED_WIDTH = 350;
  // Set a fixed width for all letters
 
 export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeight, descenderHeight, xHeight, style, color) {
@@ -37,11 +37,11 @@ export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeig
 
     // Calculate the dynamic height based on the letter's vertical extents
     const dynamicHeight = Math.max(ascenderHeight + descenderHeight, xHeight);
-    svg.setAttribute('viewBox', `-${FIXED_WIDTH /10} -${descenderHeight} ${FIXED_WIDTH} ${dynamicHeight}`);
+    svg.setAttribute('viewBox', `-${FIXED_WIDTH /300} -${descenderHeight} ${FIXED_WIDTH} ${dynamicHeight}`);
     
     // Center the content horizontally
     const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    group.setAttribute("transform", `translate(0, ${dynamicHeight / 2})`);
+    group.setAttribute("transform", `translate(0, ${dynamicHeight / -1})`);
     svg.appendChild(group);
     c.svg = group; // Update reference to use the group for drawing
     

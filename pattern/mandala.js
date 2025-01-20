@@ -186,3 +186,4 @@ function updateExistingLines() {
 
 // Initiales Zeichnen
 drawMandala();
+

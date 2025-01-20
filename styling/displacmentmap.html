@@ -77,15 +77,11 @@
             <input class="colorPicker" type="color" id="primary-color" value="#ffffff">
             <label for="secondary-color"></label>
             <input class="colorPicker" type="color" id="secondary-color" value="#000000">
-            <ul class="shadow-button-set">
-                <li><button id="swap-colors">swap</button></li>
-                <li><button>About</button></li>
-                <li><button id="circle-button" class="shape-button">
-                        <i class="fas fa-circle"></i>
-                    </button></li>
-                <li><button id="rectangle-button" class="shape-button">
-                        <i class="fas fa-square"></i></button></li>
-            </ul>
+            <button id="swap-colors">swap</button>
+            <button>About</button>
+            <button id="circle-button" class="shape-button"><i class="fas fa-circle"></i></button>
+            <button id="rectangle-button" class="shape-button"><i class="fas fa-square"></i></button>
+    
         </div>
     </div>
 
@@ -121,6 +117,16 @@
                         class="image-choice" id="imageChoice6" alt="Image 6" />
                     <img src="displacmentimages/product design, couch made of old teddybears, waste, patchwork, mix, dynamic, upcycling, modern, futuristic, interior design, studio, product photography, minimalism.jpeg"
                         class="image-choice" id="imageChoice7" alt="Image 7" />
+
+                    <img src="displacmentimages/Snow007C_2K-JPG_Displacement.jpg"
+                        class="image-choice" id="imageChoice8" alt="Image 8" />
+                                            <img src="displacmentimages/DiamondPlate008C_4K-JPG_Displacement.jpg" class="image-choice" id="imageChoice9" alt="Image 9" />
+
+                                            <img src="displacmentimages/Sponge003_4K-JPG_AmbientOcclusion.jpg" class="image-choice" id="imageChoice10"
+                                                alt="Image 10" />
+
+                                            <img src="displacmentimages/Cork001_2K-JPG_Color.jpg" class="image-choice" id="imageChoice11"
+                                                alt="Image 11" />
                 </div>
 
                 <!-- Textfeld für den Benutzer, um eigenen Text einzugeben -->
@@ -239,6 +245,31 @@
                             feImage.setAttribute('href', imageUrl);
                             updateWrapperSize(imageUrl);
                         });
+
+                            document.getElementById('imageChoice8').addEventListener('click', function () {
+                                const imageUrl = this.src;
+                                feImage.setAttribute('href', imageUrl);
+                                updateWrapperSize(imageUrl);
+                            });
+
+                                document.getElementById('imageChoice9').addEventListener('click', function () {
+                                    const imageUrl = this.src;
+                                    feImage.setAttribute('href', imageUrl);
+                                    updateWrapperSize(imageUrl);
+                                });
+
+                                    document.getElementById('imageChoice10').addEventListener('click', function () {
+                                        const imageUrl = this.src;
+                                        feImage.setAttribute('href', imageUrl);
+                                        updateWrapperSize(imageUrl);
+                                    });
+
+                                        document.getElementById('imageChoice11').addEventListener('click', function () {
+                                            const imageUrl = this.src;
+                                            feImage.setAttribute('href', imageUrl);
+                                            updateWrapperSize(imageUrl);
+                                        });
+
         // Funktion zur dynamischen Anpassung der Wrapper-Größe
         function updateWrapperSize(imageUrl) {
             const img = new Image();
@@ -256,19 +287,16 @@
             updateTextWithLineBreaks(userInputText);
         });
 
-        // Event listener für das Ändern der Schriftart
-        fontSelect.addEventListener('change', (event) => {
-            const selectedFont = event.target.value;
-            dynamicText.setAttribute('font-family', selectedFont); // Schriftart ändern
-            updateTextWithLineBreaks(userTextInput.value); // Text nach Schriftartänderung erneut rendern
-        });
 
-        // Event listener für das Ändern der Schriftgröße
-        fontSizeRange.addEventListener('input', (event) => {
-            const newSize = event.target.value;
-            dynamicText.setAttribute('font-size', newSize); // Schriftgröße ändern
-            updateTextWithLineBreaks(userTextInput.value); // Text nach Größenänderung erneut rendern
-        });
+
+// Event listener für das Ändern des Scale-Werts des Displacement-Bildes
+displacementScale.addEventListener('input', (event) => {
+    const newScale = event.target.value;
+    const displacementMap = document.querySelector('feDisplacementMap');
+    if (displacementMap) {
+        displacementMap.setAttribute('scale', newScale);
+    }
+});
 
         // Event listener für das Ändern des Scale-Werts des Displacement-Bildes
         displacementScale.addEventListener('input', (event) => {
@@ -312,6 +340,15 @@
                 dynamicText.appendChild(tspan);
             });
         }
+                fontSelect.addEventListener('change', (event) => {
+                        const selectedFont = event.target.value;
+                        dynamicText.style.fontFamily = selectedFont;
+                    });
+
+                    fontSizeRange.addEventListener('input', (event) => {
+                        const newSize = event.target.value;
+                        dynamicText.style.fontSize = `${newSize}px`;
+                    });
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>

@@ -199,6 +199,3 @@ export function generateLetterVariations(letter) {
 
     return variations;
 }
-
-
-
