@@ -1,6 +1,7 @@
 // stamm.js
 import { useLineVersion, lineStyle, stammParameters } from './alphabet.js';
-import { drawDotted } from './lines.js';
+import { drawCustom, drawDotted } from './lines.js';
+import { drawRectangles } from './lines.js';
 
 export function drawStamm(c, x1, y1, y2, reverse = false, flipHorizontal = false, isDiagonal = false, x2 = null) {
     if (useLineVersion) {
@@ -26,6 +27,10 @@ export function drawLineStamm(c, x1, y1, y2, isDiagonal = false, x2 = null) {
 
     if (lineStyle === 'dotted') {
         drawDotted(c, pathData);
+    } else if (lineStyle === 'rectangles') {
+        drawRectangles(c, pathData);
+            } else if (lineStyle === 'custom') {
+        drawCustom(c, pathData);
     } else {
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
         path.setAttribute("d", pathData);
@@ -35,6 +40,7 @@ export function drawLineStamm(c, x1, y1, y2, isDiagonal = false, x2 = null) {
         c.svg.appendChild(path);
     }
 }
+
 
 export function drawCurvedStamm(c, x1, y1, y2, topWidth, bottomWidth, reverse, flipHorizontal, numSegmentsLeft, numSegmentsRight, isParallel, isDiagonal = false, x2 = null) {
     if (reverse) {

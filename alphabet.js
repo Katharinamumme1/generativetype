@@ -10,12 +10,16 @@ export let isIrregularDotted;
 export let stammParameters = {}; // Hinzufügen der Initialisierung
 export let dotSize;
 export let dotSpacing;
+export let rectangleSize;
+export let isIrregularRectangle;
+export let rectangleSpacing;
 export let numPolygonPoints;
 export let style; 
 export let serif; // Hinzufügen der Serif-Parameter
 export let serifType;
 export let serifHeight;
 export let topWidth;
+
 
 
 function initializeStammParameters() {
@@ -32,8 +36,6 @@ function initializeStammParameters() {
     };
     useLineVersion = Math.random() < 0.5;
 }
-
-
 
 
 
@@ -75,12 +77,25 @@ export function generateAlphabet() {
 
     serifHeight = Math.min(stammParameters.topWidth, stammParameters.bottomWidth); 
 
-    const lineStyles = ['solid', 'dotted'];
-    lineStyle = lineStyles[Math.floor(Math.random() * lineStyles.length)];
+    const customCanvas = document.getElementById('customlinestyle_canvas');
+    const customAvailable = customCanvas && customCanvas.querySelectorAll('path, rect, circle, line, polyline, polygon').length > 0;
+
+    // Wenn Inhalte im Custom-Canvas vorhanden sind, nur Custom-Alphabete generieren
+    if (customAvailable) {
+        lineStyle = 'custom';
+    } else {
+        const lineStyles = ['dotted', 'rectangles'];
+        lineStyle = lineStyles[Math.floor(Math.random() * lineStyles.length)];
+    }
+
     isIrregularDotted = Math.random() > 0.5;
+    isIrregularRectangle = Math.random() > 0.5;
 
     dotSize = Math.random() * 110 + 5;
     dotSpacing = Math.random() * 60 + 1;
+
+    rectangleSize = Math.random() * 110 + 5;
+    rectangleSpacing = Math.random() * 60 + 1;
 
     const fontColor = document.getElementById('secondary-color').value;
 
@@ -98,8 +113,8 @@ export function generateAlphabet() {
     letters.forEach(letter => {
         const svg = createSvg(width, baseline + ascenderHeight + descenderHeight);
 
-      
-        drawLetter(svg, letter, 200, baseline, capHeight, ascenderHeight, descenderHeight, xHeight, style, fontColor); // Monospaced Breite fixieren
+        // Wenn der Custom-Stil aktiv ist, setze nur den Custom-Zeichenstil
+        drawLetter(svg, letter, 200, baseline, capHeight, ascenderHeight, descenderHeight, xHeight, lineStyle, fontColor);
         alphabetSVGs[letter] = svg;
     });
 
@@ -116,6 +131,7 @@ export function generateAlphabet() {
 
     return alphabetSVGs;
 }
+
 
 
 

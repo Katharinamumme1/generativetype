@@ -73,7 +73,7 @@ function createRectangle(x, y, size) {
     rect.setAttribute('width', size);
     rect.setAttribute('height', size);
     rect.setAttribute('stroke', 'black');
-    rect.setAttribute('fill', 'white');
+    rect.setAttribute('fill', 'none');
     return rect;
 }
 
@@ -83,7 +83,7 @@ function createTriangle(x, y, size) {
     const triangle = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
     triangle.setAttribute('points', points);
     triangle.setAttribute('stroke', 'black');
-    triangle.setAttribute('fill', 'white');
+    triangle.setAttribute('fill', 'none');
     return triangle;
 }
 
@@ -93,7 +93,7 @@ function createPentagon(x, y, size) {
     const pentagon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
     pentagon.setAttribute('points', points);
     pentagon.setAttribute('stroke', 'black');
-    pentagon.setAttribute('fill', 'white');
+    pentagon.setAttribute('fill', 'none');
     return pentagon;
 }
 
@@ -103,7 +103,7 @@ function createHexagon(x, y, size) {
     const hexagon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
     hexagon.setAttribute('points', points);
     hexagon.setAttribute('stroke', 'black');
-    hexagon.setAttribute('fill', 'white');
+    hexagon.setAttribute('fill', 'none');
     return hexagon;
 }
 
@@ -114,7 +114,7 @@ function createCircle(x, y, size) {
     circle.setAttribute('cy', y + size / 2);
     circle.setAttribute('r', size / 2);
     circle.setAttribute('stroke', 'black');
-    circle.setAttribute('fill', 'white');
+    circle.setAttribute('fill', 'none');
     return circle;
 }
 

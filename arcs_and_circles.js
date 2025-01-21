@@ -1,11 +1,17 @@
 import { useLineVersion, lineStyle, elementWidths, numPolygonPoints,topWidth } from './alphabet.js';
-import { drawDotted } from './lines.js';
+import { drawDotted, drawCustom, drawRectangles } from './lines.js';
 
 export function drawCircle(c, cx, cy, radius) {
     if (useLineVersion) {
         if (lineStyle === 'dotted') {
             drawDottedArc(c, cx, cy, radius, 0, Math.PI);
             drawDottedArc(c, cx, cy, radius, Math.PI, 2 * Math.PI);
+        } else if (lineStyle === 'rectangles') {
+            drawRectangleArc(c, cx, cy, radius, 0, Math.PI);
+            drawRectangleArc(c, cx, cy, radius, Math.PI, 2 * Math.PI);
+        } else if (lineStyle === 'custom') {
+            drawCustomArc(c, cx, cy, radius, 0, Math.PI);
+            drawCustomArc(c, cx, cy, radius, Math.PI, 2 * Math.PI);
         } else {
             drawPolygonalArcShape(c, cx, cy, radius, 0, Math.PI, numPolygonPoints);
             drawPolygonalArcShape(c, cx, cy, radius, Math.PI, 2 * Math.PI, numPolygonPoints);
@@ -25,6 +31,10 @@ export function drawArc(c, cx, cy, radius, startAngle, endAngle) {
     if (useLineVersion) {
         if (lineStyle === 'dotted') {
             drawDottedArc(c, cx, cy, radius, startAngle, endAngle);
+        } else if (lineStyle === 'rectangles') {
+            drawRectangleArc(c, cx, cy, radius, startAngle, endAngle);
+        } else if (lineStyle === 'custom') {
+            drawCustomArc(c, cx, cy, radius, startAngle, endAngle);
         } else {
             drawPolygonalArcShape(c, cx, cy, radius, startAngle, endAngle, numPolygonPoints);
         }
@@ -37,10 +47,23 @@ export function drawArc(c, cx, cy, radius, startAngle, endAngle) {
     }
 }
 
+
 function drawDottedArc(c, cx, cy, radius, startAngle, endAngle) {
     const adjustedRadius = radius - elementWidths.arcStartWidth / 2;
     const pathData = getArcPathData(cx, cy, adjustedRadius, startAngle, endAngle);
     drawDotted(c, pathData);
+}
+
+function drawRectangleArc(c, cx, cy, radius, startAngle, endAngle) {
+    const adjustedRadius = radius - elementWidths.arcStartWidth / 2;
+    const pathData = getArcPathData(cx, cy, adjustedRadius, startAngle, endAngle);
+    drawDotted(c, pathData);
+}
+
+function drawCustomArc(c, cx, cy, radius, startAngle, endAngle) {
+    const adjustedRadius = radius - elementWidths.arcStartWidth / 2;
+    const pathData = getArcPathData(cx, cy, adjustedRadius, startAngle, endAngle);
+    drawCustom(c, pathData);
 }
 
 export function getArcPathData(cx, cy, radius, startAngle, endAngle) {
@@ -53,6 +76,7 @@ export function getArcPathData(cx, cy, radius, startAngle, endAngle) {
 
     return `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`;
 }
+
 
 function drawShapeArc(c, cx, cy, radius, startAngle, endAngle, startWidth, endWidth) {
     const innerRadiusStart = radius - startWidth / 2;

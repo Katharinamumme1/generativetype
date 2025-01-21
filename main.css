@@ -1,18 +1,16 @@
 
 body {
     font-family: 'Roboto', 'Helvetica', Arial, sans-serif;
-    background-color: var(--primary-color);
+
     color:var(--secondary-color);
     margin: 0px;
     padding: 0px;
     width: 100vw;
     height: 100vh;
     font-size: 2rem;
+background-color: var(--primary-color);
 }
 
-*{
-    border: solid 2px var();
-}
 
 :root {
     --primary-color: #ffffff;
@@ -23,6 +21,7 @@ body {
 
 
 .banner{
+    background-color: var(--primary-color);
     width: 100vw;
     height: 45px;
     border-bottom: var(--secondary-color) solid 2px;
@@ -34,6 +33,7 @@ body {
     color: var(--secondary-color);
     font-size: 1.5rem;
     display: flex;
+
 
 }
 
@@ -61,6 +61,7 @@ body {
 
 
 #alphabetContainer {
+    background-color: var(--primary-color);
     display: flex;
 flex-wrap: wrap;
 flex-grow: calc();
@@ -80,11 +81,14 @@ flex-grow: calc();
     height: 180px;
     transition: all 0.3s ease-in-out;
     
+    
+    
 }
 
 .letter-svg:hover {
 width: 320px;
 transition: ease-in-out 1s;
+    background-color: var(--primary-color);
 }
 
 
@@ -100,12 +104,11 @@ transition: ease-in-out 1s;
                 .letter-button{
                     width: 50px;
                     height: 50px;
-
+                    background-color: #00000000;
                     border-radius: 50%;
 
-                    font-size: 2.5vmin;
+                    
                                     border: 2px solid var(--secondary-color);
-                                    background: var(--primary-color);
                                     color: var(--secondary-color);
                 }
 
@@ -120,15 +123,18 @@ transition: ease-in-out 1s;
         font-size: 2vmin;
         border: 1.5px solid var(--secondary-color);
         color: var(--secondary-color);
-        background-color: var(--primary-color);
+background-color: rgba(255, 222, 173, 0);
 
         --distance: 0;
         transform: translateX(var(--distance)) translateY(var(--distance));
-        margin: 4px;
+
+        
     }
 button:active{
-    box-shadow: 5px 5px var(--secondary-color);
+    box-shadow: 2px 2px var(--secondary-color);
+scale: 95%;
 }
+
 
 
 
@@ -141,14 +147,14 @@ button:active{
 .nav-button{
     width: 100px;
     height:40px;
-border-radius: 50%;
-padding: 5px;
+border-radius: 14%;
+padding: 1px;
     border: 2px solid var(--secondary-color);
-    background: var(--primary-color);
     color: var(--secondary-color);
 }
 .main{
   height:  95vh;
+background-color: var(--primary-color);
 
 }
 .nav-container{
@@ -157,6 +163,7 @@ padding: 5px;
     border-bottom: var(--secondary-color) 2px solid;
     overflow: scroll;
     border: solid 1.5px var(--secondary-color);
+
 }
 .subnav-container{
     height: 12%;
@@ -171,6 +178,7 @@ height: 100%;
     border-right: 1.5px solid var(--secondary-color);
     font-size: 1.5rem;
 }
+
 .category-container{
 width: 100%;
 height: 85%;

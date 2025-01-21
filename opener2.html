@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toolbox Animation</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #opener {
+            display: flex;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10;
+        }
+
+        .opener_sites {
+            height: 100%;
+            width: 50vw;
+            border: 1px solid rgb(0, 0, 0);
+            background-color: white;
+                background: linear-gradient(135deg, #d9d9d9, #a6a6a6, #ececec, #b3b3b3);
+
+            transition: transform 0.5s ease-in-out;
+            animation: subtleReflect 10s infinite alternate ease-in-out;
+        }
+
+        .left {
+            transform: translateX(0);
+        }
+
+        .right {
+            transform: translateX(0);
+        }
+
+        .left.open {
+            transform: translateX(-100%);
+        }
+
+        .right.open {
+            transform: translateX(100%);
+        }
+
+        #toolboxbutton {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: absolute;
+            border: 1.5px solid rgb(0, 0, 0);
+            color: var(secondary-color);
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            z-index: 15;
+            left: 50%;
+                background: linear-gradient(135deg, #d9d9d9, #a6a6a6, #ececec, #b3b3b3);
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 5;
+        }
+
+
+
+
+        #typewriter-container {
+            position: absolute;
+            bottom: 90vh;
+            left: 20px;
+            color: white;
+            font-size: 2rem;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 90%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #typewriter-text {
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            border-right: 2px solid white;
+            animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: white;
+            }
+        }
+
+                        
+
+
+                @keyframes subtleReflect {
+                    0% {
+                        background-position: 0% 0%;
+                    }
+        
+                    100% {
+                        background-position: 100% 100%;
+                    }
+                }
+    </style>
+</head>
+
+<body>
+    <iframe src="index.html"></iframe>
+    <div id="opener">
+        <div class="opener_sites left" id="navcontainer"></div>
+        <div class="opener_sites right" id="settingcontainer"></div>
+        <button id="toolboxbutton">Open Toolbox</button>
+    </div>
+
+    <script>
+        const button = document.getElementById('toolboxbutton');
+        const leftPanel = document.getElementById('navcontainer');
+        const rightPanel = document.getElementById('settingcontainer');
+        const opener = document.getElementById('opener');
+
+        button.addEventListener('click', () => {
+            // Start the animation
+            leftPanel.classList.toggle('open');
+            rightPanel.classList.toggle('open');
+
+            // Remove the doors after the animation
+            setTimeout(() => {
+                opener.style.display = 'none';
+            }, 500); // Matches the animation duration
+        });
+
+        
+    </script>
+</body>
+
+</html>
