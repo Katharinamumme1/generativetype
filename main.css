@@ -35,7 +35,7 @@ background-color: var(--primary-color);
     position: absolute;
     z-index: 15;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
 
 }
@@ -56,7 +56,6 @@ background-color: var(--primary-color);
     display: flex;
     flex-wrap: wrap;
 
-
     gap: 0px;
     width: 100%;
     height: 100%;
@@ -66,19 +65,18 @@ background-color: var(--primary-color);
 
 }
 
-.letter-svg {
-    flex: 1 1 150px;
-    height: 150px;
-    border: 2px solid var(--secondary-color);
+.letter-svg{
+    border: var(--secondary-color) solid 2px;
     border-radius: 50%;
+    width:150px;
+    height: 150px;
     transition: all 0.3s ease-in-out;
-    background-color: var(--primary-color);
-}
 
-.letter-svg:hover {
-    flex-grow: 3;
-    background-color: var(--secondary-color);
-    transition: all 0.3s ease-in-out;
+  
+}   
+.letter-svg:hover{
+
+    transition: ease-in-out 2s;
 }
 
                 .letter-button{
@@ -138,7 +136,7 @@ scale: 95%;
     overflow: scroll;
     border: solid 0.5px var(--secondary-color);
     display: flex;
-    flex-direction: column;
+    flex-direction:column;
 
                 overflow-y: scroll;
 
