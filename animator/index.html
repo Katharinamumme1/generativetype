@@ -15,22 +15,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.select.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/gif.js"></script>
     <style>
-        #poster{
-            height: 100%;
-            width: 50%;
-            border: var(secondary-color) solid 2px;
-            background-color: red;
-        }
-        #galleryforposter{
-            height: 100%;
-            width: 50%;
-            border: var(secondary-color) solid 2px;
-display: flex;
-flex: wrap;
-        }
-
+#animationcontainer{
+    width: 100%;
+    height: 100%;
+}
     </style>
-
 </head>
 
 <body>
@@ -50,49 +39,55 @@ flex: wrap;
 
 
     <div class="nav-container">
-        <a href="/index.html"><button class="nav-button">Glyphen</button></a>
-        <a href="/pattern/index.html"><button class="nav-button">Patterns</button></a>
-        <a href="/styling/index.html"><button class="nav-button">Styling</button></a>
-        <a href="index.html"><button class="nav-button">Poster</button></a>
+        <ul>
+            <li><a href="../index.html"><button class="nav-button">Font</button></a></li>
+            <li><a href="../pattern/index.html"><button class="nav-button">Patterns</button></a></li>
+            <li><a href="../styling/index.html"><button class="nav-button">Styling</button></a></li>
+            <li><a href="../Poster/index.html"><button class="nav-button">Poster</button></a></li>
             <li><a href="#"><button class="nav-button">animator</button></a></li>
+        </ul>
+
+
     </div>
-<div class="main">
+    <div class="main">
 
         <div class="subnav-container">
-            <a href="#"><button class="nav-button">.</button></a>
-            <a href="#"><button class="nav-button">.</button></a>
-            <a href="#"><button class="nav-button">.</button></a>
+
         </div>
 
-<div class="category-container">
+
+
+
+        <div class="category-container">
             <div class="settings-container">
-            </div>
-
-            <div class="workspace" c>
-                <div id="poster"></div>
-                <div id="galleryforposter"></div>
 
             </div>
-</div>
-</div>
 
-</body>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            displaySVGs('galleryforposter'); // Galerie automatisch befüllen
-        });
-    </script>
+
+            <div class="workspace">
+                <div id="animationcontainer"></div>
+                <svg id="animation"></svg>
+            </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-
-
+    <script src="alphabet.js" type="module"></script>
+    <script src="letters.js" type="module"></script>
     <script src="color-settings.js"></script>
+
+
+
+
+
+
+
+
+    </script>
     <script src="main.js"></script>
-    <script src="/svgStorage.js"></script>
 
 
-
+</body>
 
 </html>

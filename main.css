@@ -70,13 +70,20 @@ background-color: var(--primary-color);
     border-radius: 50%;
     width:150px;
     height: 150px;
-    transition: all 0.3s ease-in-out;
+
+    animation: hue 5s infinite;
+        transition: all 5s ease-in-out;
+        animation:test 4s infinite;
+
+
 
   
 }   
 .letter-svg:hover{
-
+scale: 150%;
+margin:25px;
     transition: ease-in-out 2s;
+
 }
 
                 .letter-button{
@@ -99,13 +106,12 @@ background-color: var(--primary-color);
         border: 1.5px solid var(--secondary-color);
         color: var(--secondary-color);
         background-color: rgba(255, 222, 173, 0);
-        
+
     }
 button:active{
     box-shadow: 2px 2px var(--secondary-color);
 scale: 95%;
 }
-
 
 
 
@@ -119,10 +125,6 @@ scale: 95%;
     width: 150px;
     height:50px;
     border: none;
-
-
-
-
 }
 .main{
   height:  95vh;
@@ -150,6 +152,7 @@ scale: 95%;
         flex-direction: row;
     border: solid 0.5px var(--secondary-color);
     overflow-x: scroll;
+
 }
 
 
@@ -176,6 +179,7 @@ display: flex;
     overflow: scroll;
     display: flex;
     flex-wrap: wrap;
+    
 
 }
 
@@ -202,6 +206,7 @@ ul {
     font: bold 1.5rem sans-serif;
     text-transform: uppercase;
     color: rgb(255, 0, 0);
+
 }
 
 ul li {
@@ -245,3 +250,29 @@ ul:hover li:hover~li:before {
     translate: -100% 0;
     transition: .2s .2s, scale 0s .4s;
 }
+
+@keyframes hue {
+    from {
+
+    }
+
+    to {
+filter: hue-rotate(270deg);
+    }
+}
+@keyframes test {
+    from {transform: rotate3d(1,
+                1,
+                1,
+                -10deg);}
+
+    to {
+        transform: rotate3d(1,
+            1,
+            1,
+            50deg);
+
+    }
+}
+
+
