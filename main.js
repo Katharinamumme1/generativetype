@@ -20,3 +20,5 @@
             element.style.borderRadius = ''; // Setzt border-radius zurück
         });
     });
+
+

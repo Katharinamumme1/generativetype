@@ -11,10 +11,10 @@ let drawing = false;
 let lastPoint = null;
 let gridEnabled = false;
 let strokeWidth = parseInt(mandalaStrokeWidthInput.value);
-let strokeColor = secondaryColorPicker.value; // Sekundärfarbe als Standard setzen
 
 // Funktion zum Zeichnen des Mandalas
 function drawMandala() {
+    const strokeColor = secondaryColorPicker.value; // Aktuelle Sekundärfarbe
     mandalaCanvas.innerHTML = ''; // Clear previous drawing
     const centerX = mandalaCanvas.width.baseVal.value / 2;
     const centerY = mandalaCanvas.height.baseVal.value / 2;
@@ -44,6 +44,7 @@ function drawMandala() {
 
 // Funktion zum Zeichnen der Hilfslinien
 function drawGrid() {
+    const strokeColor = secondaryColorPicker.value; // Aktuelle Sekundärfarbe
     const gridSize = 20;
     const width = mandalaCanvas.width.baseVal.value;
     const height = mandalaCanvas.height.baseVal.value;
@@ -75,6 +76,7 @@ function drawGrid() {
 
 // Funktion zum Zeichnen einer Linie
 function drawLine(x1, y1, x2, y2) {
+    const strokeColor = secondaryColorPicker.value; // Aktuelle Sekundärfarbe
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('x1', x1);
     line.setAttribute('y1', y1);
@@ -121,8 +123,6 @@ mandalaCanvas.addEventListener('mousemove', (e) => {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        strokeColor = secondaryColorPicker.value; // Update strokeColor on every move
-
         if (gridEnabled) {
             const gridSize = 20;
             const snapX = Math.round(x / gridSize) * gridSize;
@@ -161,8 +161,7 @@ mandalaStrokeWidthInput.addEventListener('input', () => {
 
 // Event Listener für die Sekundärfarbe
 secondaryColorPicker.addEventListener('input', () => {
-    strokeColor = secondaryColorPicker.value; // Aktualisiere die Stroke-Farbe
-    updateExistingLines(); // Aktualisiere alle vorhandenen Linien
+    drawMandala(); // Aktualisiere das Mandala bei Farbänderung
 });
 
 // Event Listener für das Tauschen der Farben
@@ -172,18 +171,8 @@ swapColorsButton.addEventListener('click', () => {
     primaryColorPicker.value = secondaryColorPicker.value;
     secondaryColorPicker.value = tempColor;
 
-    strokeColor = secondaryColorPicker.value; // Aktualisiere die Stroke-Farbe
-    updateExistingLines(); // Aktualisiere alle vorhandenen Linien
+    drawMandala(); // Aktualisiere das Mandala bei Farbtausch
 });
-
-// Funktion zum Aktualisieren aller vorhandenen Linien
-function updateExistingLines() {
-    const lines = mandalaCanvas.querySelectorAll('line');
-    lines.forEach(line => {
-        line.setAttribute('stroke', strokeColor);
-    });
-}
 
 // Initiales Zeichnen
 drawMandala();
-

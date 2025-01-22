@@ -59,9 +59,7 @@ export function drawLetter(svg, letter, width, baseline, capHeight, ascenderHeig
     }
 }
 
-// Initialfarben
-let primaryColor = "#ffffff"; 
-let secondaryColor = "#000000"; 
+
 let outlineOnly = false; // Status für Outline-Mode
 
 // Event-Listener für Farbänderungen und Aktionen

@@ -16,11 +16,21 @@
     <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/gif.js"></script>
 
     <style>
-#gridCanvas{
-    width: 100%;
-    height: 100%;
-}
+        #largeCanvas {
+            width: 100%;
+            height: 100%;
+        }
 
+        #smallCanvas {
+            width: 80%;
+            height: 20%;
+            border: black solid 2px;
+        }
+        #lissajousSVG{
+            width: 100%;
+            height: 100%;
+            border: 3px solid red;
+        }
     </style>
 </head>
 
@@ -35,7 +45,7 @@
             <button>About</button>
             <button id="circle-button" class="shape-button"><i class="fas fa-circle"></i></button>
             <button id="rectangle-button" class="shape-button"><i class="fas fa-square"></i></button>
-    
+
         </div>
     </div>
 
@@ -46,65 +56,75 @@
             <li><a href="/styling/index.html"><button class="nav-button">Styling</button></a></li>
             <li><a href="/poster/index.html"><button class="nav-button">Poster</button></a></li>
         </ul>
+<div class="main">
 
-    <div class="main">
-
-        <section class="subnav-container">
+                <div class="subnav-container">
                     <ul>
-                        <li><a href="#"><button class="nav-button">Mandala</button></a></li>
+                        <li><a href="index.html"><button class="nav-button">Mandala</button></a></li>
                         <li><a href="delaunay.html"><button class="nav-button">delaunay</button></a></li>
                         <li><a href="custombrush.html"><button class="nav-button">Brush</button></a></li>
                         <li><a href="grid.html"><button class="nav-button">Grid</button></a></li>
                         <li><a href="distortion.html"><button class="nav-button">Distortion</button></a></li>
-                        <li><a href="lissajous.html"><button class="nav-button">lissajous</button></a></li>
+                        <li><a href="#"><button class="nav-button">lissajous</button></a></li>
                         <li><a href="#"><button class="nav-button">Kaleidoskop</button></a></li>
                         <li><a href="#"><button class="nav-button">voronoi</button></a></li>
                         <li><a href="#"><button class="nav-button">Tesselation</button></a></li>
+        
                     </ul>
-        </section>
+                </div>
 
-        <div class="category-container" id="mandala">
+        <div class="category-container">
 
             <div class="settings-container">
-        <input type="color" id="colorPicker" />
-        
-        <!-- Form auswählen -->
-        <label for="shapeSelect">Form auswählen:</label>
-        <select id="shapeSelect">
-            <option value="rectangle">Rechteck</option>
-            <option value="triangle">Dreieck</option>
-            <option value="pentagon">Fünfeck</option>
-            <option value="hexagon">Sechseck</option>
-            <option value="circle">Kreis</option>
-        </select>
-        
-        <!-- Größe der Zellen -->
-        <label for="cellSize">Größe der Zellen:</label>
-        <input type="number" id="cellSize" value="50" min="10" max="150" step="1" />
-        
-        <!-- Zufallsgrößenbereich -->
-        <label for="sizeRange">Zufallsgrößenbereich:</label>
-        <input type="range" id="sizeRange" min="30" max="150" step="5" value="50" />
-        
-        <!-- Abstand zwischen Zellen -->
-        <label for="spacing">Abstand zwischen Zellen:</label>
-        <input type="number" id="spacing" value="-10" min="-80" max="200" step="1" />
-
+                <div >
+                    <label for="freqX">Frequenz X:</label>
+                    <input type="range" id="freqX" min="1" max="10" step="1" value="3">
+                    <span id="freqXValue">3</span>
+                </div>
+                
+                <div>
+                    <label for="freqY">Frequenz Y:</label>
+                    <input type="range" id="freqY" min="1" max="10" step="1" value="2">
+                    <span id="freqYValue">2</span>
+                </div>
+                
+                <div>
+                    <label for="ampX">Amplitude X:</label>
+                    <input type="range" id="ampX" min="50" max="250" step="10" value="150">
+                    <span id="ampXValue">150</span>
+                </div>
+                
+                <div>
+                    <label for="ampY">Amplitude Y:</label>
+                    <input type="range" id="ampY" min="50" max="250" step="10" value="150">
+                    <span id="ampYValue">150</span>
+                </div>
+                
+                
+                <div>
+                    <label for="phaseX">Phasenverschiebung X:</label>
+                    <input type="range" id="phaseX" min="0" max="2*Math.PI" step="0.1" value="0">
+                    <span id="phaseXValue">0</span>
+                </div>
+                
+                <div>
+                    <label for="phaseY">Phasenverschiebung Y:</label>
+                    <input type="range" id="phaseY" min="1" max="2*Math.PI" step="0.1" value="0">
+                    <span id="phaseYValue">0</span>
+                </div>
             </div>
 
 
-            <div class="workspace">
-
-    <svg id="gridCanvas"></svg>
-            </div>
-        </div>
+            <div class="workspace">   <svg id="lissajousSVG"></svg></div>
+       
+</div></div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
         <script src="/color-settings.js"></script>
-        <script src="grid.js"></script>
         <script src="/main.js"></script>
+        <script src="lissajous.js"></script>
 
 </body>
 

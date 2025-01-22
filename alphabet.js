@@ -38,8 +38,6 @@ function initializeStammParameters() {
 }
 
 
-
-
 export function generateAlphabet() {
     const alphabetContainer = document.getElementById('alphabetContainer');
     if (alphabetContainer) {
@@ -75,15 +73,22 @@ export function generateAlphabet() {
     const maxLength = rightX - leftX;
     middleLineLength = Math.random() * (maxLength - minLength) + minLength;
 
-    serifHeight = Math.min(stammParameters.topWidth, stammParameters.bottomWidth); 
+    serifHeight = Math.min(stammParameters.topWidth, stammParameters.bottomWidth);
 
     const customCanvas = document.getElementById('customlinestyle_canvas');
     const customAvailable = customCanvas && customCanvas.querySelectorAll('path, rect, circle, line, polyline, polygon').length > 0;
 
-    // Wenn Inhalte im Custom-Canvas vorhanden sind, nur Custom-Alphabete generieren
-    if (customAvailable) {
-        lineStyle = 'custom';
-    } else {
+    // Wenn der Button gedrückt wird, auf Custom-Stil wechseln
+    const customButton = document.getElementById('customgeneration');
+    if (customButton) {
+        customButton.addEventListener('click', () => {
+            lineStyle = 'custom';
+            generateAlphabet(); // Erneut aufrufen mit Custom-Stil
+        });
+    }
+
+    // Standardmäßig kein Custom-Stil, es sei denn, der Button wird gedrückt
+    if (!customAvailable || lineStyle !== 'custom') {
         const lineStyles = ['dotted', 'rectangles'];
         lineStyle = lineStyles[Math.floor(Math.random() * lineStyles.length)];
     }
@@ -136,7 +141,6 @@ export function generateAlphabet() {
 
 
 
-
 function createSvg(width, height) {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("width", width);
@@ -145,6 +149,100 @@ function createSvg(width, height) {
     svg.classList.add('letter-canvas');
     return svg;
 }
+
+
+export function generateCustomFont() {
+     const alphabetContainer = document.getElementById('alphabetContainer');
+    if (alphabetContainer) {
+        alphabetContainer.innerHTML = '';
+    }
+
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+    const width = 250;
+    const capHeight = 200;
+    const ascenderHeight = capHeight * 0.6;
+    const descenderHeight = capHeight * 0.3;
+    const xHeight = capHeight * 0.7;
+    const baseline = capHeight + descenderHeight;
+
+    initializeStammParameters(); // Initialisierung der Stammparameter
+
+    elementWidths = {
+        lineStartWidth: stammParameters.topWidth,
+        lineEndWidth: stammParameters.topWidth,
+        arcStartWidth: stammParameters.topWidth,
+        arcEndWidth: stammParameters.topWidth,
+        archStartWidth: stammParameters.bottomWidth,
+        archEndWidth: stammParameters.bottomWidth
+    };
+
+
+
+
+    const minDistanceFromTop = capHeight / 4;
+    const maxDistanceFromBottom = capHeight * 3 / 4;
+    horizontalLineY = baseline - capHeight + Math.random() * (maxDistanceFromBottom - minDistanceFromTop) + minDistanceFromTop;
+
+    const leftX = width * 0.4;
+    const rightX = width * 0.6;
+    const minLength = (rightX - leftX) * 0.3;
+    const maxLength = rightX - leftX;
+    middleLineLength = Math.random() * (maxLength - minLength) + minLength;
+
+    serifHeight = Math.min(stammParameters.topWidth, stammParameters.bottomWidth);
+
+    const customCanvas = document.getElementById('customlinestyle_canvas');
+    const customAvailable = customCanvas && customCanvas.querySelectorAll('path, rect, circle, line, polyline, polygon').length > 0;
+lineStyle = 'custom';
+useLineVersion = true;
+
+
+
+    rectangleSpacing = Math.random() * 60 + 1;
+
+    const fontColor = document.getElementById('secondary-color').value;
+
+    numPolygonPoints = Math.floor(Math.random() * 8) + 1;
+
+    const styles = ['keinstyle', 'outline', 'hatched'];
+    style = styles[Math.floor(Math.random() * styles.length)]; // Setzen des style-Parameters
+
+    const serifOptions = [true, false];
+    serif = serifOptions[Math.floor(Math.random() * serifOptions.length)]; // Zufällig Serifen einfügen oder nicht
+    const serifTypes = ['rectangle', 'triangle', 'trapezoid'];
+    serifType = serif ? serifTypes[Math.floor(Math.random() * serifTypes.length)] : null; // Zufällige Auswahl der Art der Serifen
+
+    const alphabetSVGs = {};
+    letters.forEach(letter => {
+        const svg = createSvg(width, baseline + ascenderHeight + descenderHeight);
+
+        // Wenn der Custom-Stil aktiv ist, setze nur den Custom-Zeichenstil
+        drawLetter(svg, letter, 200, baseline, capHeight, ascenderHeight, descenderHeight, xHeight, lineStyle, fontColor);
+        alphabetSVGs[letter] = svg;
+    });
+
+    if (alphabetContainer) {
+        Object.values(alphabetSVGs).forEach(svg => {
+            const wrapperDiv = document.createElement('div');
+            wrapperDiv.classList.add('letter-wrapper');
+            wrapperDiv.style.width = '200px'; // Feste Breite für Monospaced
+            wrapperDiv.style.height = '200px';
+            wrapperDiv.appendChild(svg);
+            alphabetContainer.appendChild(wrapperDiv);
+        });
+    
+    }
+
+      if (!customAvailable) {
+        alert('Bitte zeichne zuerst eine Linie oder Form im Custom-Canvas!');
+        return;
+    }
+
+
+    return alphabetSVGs;
+}
+
+
 
 
 
@@ -190,12 +288,15 @@ export function generateLetterVariations(letter) {
 
         serifHeight = Math.min(stammParameters.topWidth, stammParameters.bottomWidth); 
 
-        const lineStyles = ['solid', 'dotted'];
+        const lineStyles = ['rectangles', 'dotted'];
         lineStyle = lineStyles[Math.floor(Math.random() * lineStyles.length)];
         isIrregularDotted = Math.random() > 0.5;
+        isIrregularRectangle = Math.random() > 0.5;
 
         dotSize = Math.random() * 110 + 5;
         dotSpacing = Math.random() * 60 + 1;
+        rectangleSize = Math.random() * 110 + 5;
+        rectangleSpacing = Math.random() * 60 + 1;
 
         numPolygonPoints = Math.floor(Math.random() * 8) + 1;
 
