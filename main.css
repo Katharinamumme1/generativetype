@@ -71,9 +71,6 @@ background-color: var(--primary-color);
     width:150px;
     height: 150px;
 
-    animation: hue 5s infinite;
-        transition: all 5s ease-in-out;
-        animation:test 4s infinite;
 
 
 

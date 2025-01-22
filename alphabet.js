@@ -32,7 +32,7 @@ function initializeStammParameters() {
         numSegmentsLeftCorners: Math.floor(Math.random() * 6) + 0,
         numSegmentsRightCorners: Math.floor(Math.random() * 6) + 0,
         isParallel: Math.random() < 0.5,
-        isCurved
+
     };
     useLineVersion = Math.random() < 0.5;
 }
@@ -89,7 +89,7 @@ export function generateAlphabet() {
 
     // Standardmäßig kein Custom-Stil, es sei denn, der Button wird gedrückt
     if (!customAvailable || lineStyle !== 'custom') {
-        const lineStyles = ['dotted', 'rectangles'];
+        const lineStyles = ['solid','dotted', 'rectangles'];
         lineStyle = lineStyles[Math.floor(Math.random() * lineStyles.length)];
     }
 
@@ -101,6 +101,8 @@ export function generateAlphabet() {
 
     rectangleSize = Math.random() * 110 + 5;
     rectangleSpacing = Math.random() * 60 + 1;
+
+    
 
     const fontColor = document.getElementById('secondary-color').value;
 
