@@ -72,26 +72,27 @@
 
         <div class="category-container">
             <div class="settings-container">
-                <!-- Button for generating the alphabet or letter variations -->
-                <button id="customgeneration" class="icon-button"><i class="fas fa-random"></i></button>
-                <!-- Alphabet button with the same class as letter buttons -->
-                <button id="toggle-outline">Toggle Outline Only</button>
+
+             <div class="settingbox"><button id="customgeneration" class="icon-button"><i class="fas fa-random"></i></button><button id="toggle-outline">Toggle Outline Only</button></div>   
                 <svg id="customlinestyle_canvas"></svg>
 
-
-
-                <label for="grid-type">Grid Type:</label>
+                
+                <div class="settingbox" ><label for="grid-type">Grid Type:</label>
                 <select id="grid-type">
-        <option value="rectangle">Rectangle Grid</option>
-    <option value="circle">Circle Grid</option>
-</select>
-                    <label for="grid-rows">Rows:</label>
-                    <input type="number" id="grid-rows" min="1" value="10">
-                    <label for="grid-columns">Columns:</label>
-                    <input type="number" id="grid-columns" min="1" value="10">
-                    <input type="number" id="grid-radius" min="0" value="10">
+                    <option value="rectangle">Rectangle Grid</option>
+                    <option value="circle">Circle Grid</option>
+                </select></div>
 
-                    <button id="toggle-grid">Toggle Grid</button>
+                    <div class="settingbox">
+                        <label for="grid-rows">Rows:</label><input type="number" id="grid-rows" min="1" value="10">
+                    
+                    </div>
+                    <div class="settingbox"><label for="grid-columns">Columns:</label>
+                    <input type="number" id="grid-columns" min="1" value="10"></div>
+
+                    <div class="settingbox"><button id="toggle-grid">Toggle Grid</button></div>
+
+                    
                 </div>
 
 
