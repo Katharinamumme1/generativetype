@@ -182,11 +182,13 @@ display: flex;
 
 
 #page_settings{
+    width: 500px;
     height: 30px;
 display: flex;
 flex-direction: row-reverse;
 border: red solid 1px;
 padding: 10px;
+margin-bottom:90vh;
 }
 
 
