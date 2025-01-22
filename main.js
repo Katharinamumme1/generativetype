@@ -22,3 +22,23 @@
     });
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    // Erstelle den benutzerdefinierten Cursor
+    const cursor = document.createElement("div");
+    cursor.classList.add("custom-cursor");
+    document.body.appendChild(cursor);
+
+    // Aktualisiere die Position des Cursors bei Mausbewegung
+    document.addEventListener("mousemove", (e) => {
+        cursor.style.left = `${e.pageX}px`;
+        cursor.style.top = `${e.pageY}px`;
+    });
+
+    // Optional: Zeige den benutzerdefinierten Cursor nur, wenn die Maus sich bewegt
+    document.addEventListener("mouseleave", () => {
+        cursor.style.opacity = "0";
+    });
+    document.addEventListener("mouseenter", () => {
+        cursor.style.opacity = "1";
+    });
+});

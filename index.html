@@ -27,31 +27,33 @@
 
 
     <div class="nav-container">
-        <ul>
-        <li><a href="#"><button class="nav-button">Font</button></a></li>
-        <li<a href="pattern/index.html"><button class="nav-button">Patterns</button></a>></li>
+                            <div id="page_settings">
+                                <label for="primary-color"></label>
+                                <input class="colorPicker" type="color" id="primary-color" value="#ffffff">
+                                <label for="secondary-color"></label>
+                                <input class="colorPicker" type="color" id="secondary-color" value="#000000">
+                                <button id="swap-colors">swap</button>
+                                <button>About</button>
+                                <button id="circle-button" class="shape-button"><i class="fas fa-circle"></i></button>
+                                <button id="rectangle-button" class="shape-button"><i class="fas fa-square"></i></button>
+                            </div>
+            <ul>
+                <li><a href="#"><button class="nav-button">Font</button></a></li>
+        <li><a href="pattern/index.html"><button class="nav-button">Patterns</button></a></li>
                 <li><a href="/styling/index.html"><button class="nav-button">Styling</button></a></li>
                 <li><a href="/Poster/index.html"><button class="nav-button">Poster</button></a></li>
             <li><a href="animator/index.html"><button class="nav-button">animator</button></a></li>
             </ul>
 
-                    <div id="page_settings">
-                        <label for="primary-color"></label>
-                        <input class="colorPicker" type="color" id="primary-color" value="#ffffff">
-                        <label for="secondary-color"></label>
-                        <input class="colorPicker" type="color" id="secondary-color" value="#000000">
-                        <button id="swap-colors">swap</button>
-                        <button>About</button>
-                        <button id="circle-button" class="shape-button"><i class="fas fa-circle"></i></button>
-                        <button id="rectangle-button" class="shape-button"><i class="fas fa-square"></i></button>
-                    </div>
-        
+
         
 
     </div>
 <div class="main">
 
         <div class="subnav-container">
+
+
             <ul>
                 <li><a href="index.html"><button class="nav-button">Glyphen</button></a></li>
                 <li><a href="alphabet.html"><button class="nav-button">alphabet generation</button></a></li>
@@ -65,12 +67,9 @@
 
     <div class="category-container">
             <div class="settings-container">
-                <div class="settingbox">
-                                                                <!-- Button for generating the alphabet or letter variations -->
-                                                                <button id="generateButton" class="icon-button"><i class="fas fa-random"></i></button>
-                                                                <!-- Alphabet button with the same class as letter buttons -->
-                                                                <button id="toggle-outline">Outline Only</button>
-                </div>
+                <div class="settingbox"><button id="generateButton" class="icon-button"><i class="fas fa-random"></i></button>
+                <button id="toggle-outline">Outline Only</button>
+            </div>
 
                 <div id="letterButtonsContainer" class="buttons-container">
                     <!-- Buttons for letters will be generated here -->
@@ -185,7 +184,8 @@
 
 
     </script>
- 
+ <script src="color-settings.js"></script>
+ <script src="main.js"></script>
 
 
 
