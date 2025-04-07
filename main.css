@@ -100,7 +100,6 @@ background-color: var(--primary-color);
     width: 150px;
     height: 150px;
     display: inline-block;
-    animation: flip 3s;
             filter: drop-shadow(20px 20px 20px var(--secondary-color));
             
 }
@@ -150,34 +149,20 @@ scale: 95%;
     border: none;
 }
 .main{
-  height:  95vh;
-
-
-}
-.nav-container{
-    height: 50px;
-    width: 100%;
-
-
-
+  height:  100vh;
+width: 100vw;
 }
 
 
 
-.subnav-container {
-    height: 50px;
-    width: 100%;
-    border: solid 0.5px var(--secondary-color);
-display: grid;
 
 
-}
 
 
 
 .settings-container{
 width: 15%;
-height: 100%;
+height: 100vh;
 
 display: flex;
 flex-direction: column;
@@ -189,11 +174,12 @@ flex-direction: column;
 
 .category-container{
 width: 100%;
-height: 85%;
+height: 100vh;
 display: flex;
-    border: solid 1.5px var(--secondary-color);
+
 }
 .workspace{
+    margin-top: 5vh;
    width:  85%;
    height: 100%;
     overflow: scroll;
